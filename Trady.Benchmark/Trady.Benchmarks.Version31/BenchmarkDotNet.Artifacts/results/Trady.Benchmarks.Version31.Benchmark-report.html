@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Trady.Benchmarks.Version31.Benchmark-20200121-125151</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18363
+Intel Core i5-9400 CPU 2.90GHz (Coffee Lake), 1 CPU, 6 logical and 6 physical cores
+.NET Core SDK=3.1.100
+  [Host]     : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
+  Job-QQTCKZ : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
+</code></pre>
+<pre><code>Runtime=.NET Core 3.1  
+</code></pre>
+
+<table>
+<thead><tr><th>                      Method</th><th>  Mean</th><th>Error</th><th>StdDev</th><th>     P90</th>
+</tr>
+</thead><tbody><tr><td>TransformToMonthly</td><td>380.2 us</td><td>2.15 us</td><td>2.01 us</td><td>382.4 us</td>
+</tr><tr><td>TransformToDaily</td><td>386.8 us</td><td>3.23 us</td><td>3.02 us</td><td>390.1 us</td>
+</tr><tr><td>RelativeStrengthIndex</td><td>3,138.0 us</td><td>35.73 us</td><td>31.67 us</td><td>3,169.0 us</td>
+</tr><tr><td>ExponentialMovingAverage</td><td>1,232.6 us</td><td>4.59 us</td><td>3.58 us</td><td>1,237.3 us</td>
+</tr><tr><td>SimpleMovingAverage</td><td>1,112.7 us</td><td>24.71 us</td><td>33.82 us</td><td>1,160.1 us</td>
+</tr><tr><td>MACD</td><td>2,931.1 us</td><td>31.76 us</td><td>29.71 us</td><td>2,958.8 us</td>
+</tr><tr><td>CommodityChannelIndex</td><td>12,855.9 us</td><td>161.08 us</td><td>150.68 us</td><td>13,060.9 us</td>
+</tr><tr><td>StochasticMomentumIndex</td><td>5,697.7 us</td><td>43.13 us</td><td>40.34 us</td><td>5,746.6 us</td>
+</tr><tr><td>StochasticRelativeStrengthIndex</td><td>6,553.4 us</td><td>131.48 us</td><td>216.03 us</td><td>6,911.7 us</td>
+</tr><tr><td>NetMomentumOscillator</td><td>3,429.9 us</td><td>42.72 us</td><td>37.87 us</td><td>3,488.9 us</td>
+</tr><tr><td>RelativeMomentum</td><td>2,752.1 us</td><td>22.59 us</td><td>21.13 us</td><td>2,782.1 us</td>
+</tr><tr><td>RelativeMomentumIndex</td><td>3,205.0 us</td><td>63.36 us</td><td>67.79 us</td><td>3,286.7 us</td>
+</tr><tr><td>DynamicMomentumIndex</td><td>999,726.4 us</td><td>9,389.40 us</td><td>8,782.85 us</td><td>1,007,662.7 us</td>
+</tr><tr><td>ParabolicStopAndReverse</td><td>967.2 us</td><td>9.93 us</td><td>9.29 us</td><td>980.0 us</td>
+</tr><tr><td>Median</td><td>2,474.2 us</td><td>33.02 us</td><td>30.89 us</td><td>2,511.5 us</td>
+</tr><tr><td>Percentile</td><td>3,176.2 us</td><td>39.41 us</td><td>36.86 us</td><td>3,227.2 us</td>
+</tr><tr><td>AccumulationDistributionLine</td><td>874.8 us</td><td>7.07 us</td><td>6.61 us</td><td>882.9 us</td>
+</tr><tr><td>Aroon</td><td>4,595.1 us</td><td>64.90 us</td><td>60.71 us</td><td>4,674.2 us</td>
+</tr><tr><td>AroonOscillator</td><td>4,837.2 us</td><td>66.59 us</td><td>62.29 us</td><td>4,903.6 us</td>
+</tr><tr><td>AverageTrueRange</td><td>1,539.3 us</td><td>14.30 us</td><td>13.37 us</td><td>1,557.0 us</td>
+</tr><tr><td>BollingerBands</td><td>3,234.2 us</td><td>8.54 us</td><td>7.57 us</td><td>3,245.8 us</td>
+</tr><tr><td>BollingerBandWidth</td><td>3,526.0 us</td><td>17.95 us</td><td>14.99 us</td><td>3,540.1 us</td>
+</tr><tr><td>ChandelierExit</td><td>2,843.6 us</td><td>30.17 us</td><td>28.22 us</td><td>2,882.1 us</td>
+</tr><tr><td>Momentum</td><td>608.1 us</td><td>3.25 us</td><td>2.88 us</td><td>611.8 us</td>
+</tr><tr><td>RateOfChange</td><td>684.1 us</td><td>5.30 us</td><td>4.96 us</td><td>690.4 us</td>
+</tr><tr><td>PlusDirectionalIndicator</td><td>2,974.9 us</td><td>22.82 us</td><td>20.23 us</td><td>2,989.3 us</td>
+</tr><tr><td>MinusDirectionalIndicator</td><td>2,994.1 us</td><td>12.01 us</td><td>10.64 us</td><td>3,008.7 us</td>
+</tr><tr><td>AverageDirectionalIndex</td><td>6,906.1 us</td><td>65.08 us</td><td>60.87 us</td><td>6,963.4 us</td>
+</tr><tr><td>AverageDirectionalIndexRating</td><td>7,302.0 us</td><td>53.71 us</td><td>50.24 us</td><td>7,379.1 us</td>
+</tr><tr><td>EfficiencyRatio</td><td>1,179.1 us</td><td>4.31 us</td><td>4.03 us</td><td>1,183.6 us</td>
+</tr><tr><td>KaufmanAdaptiveMovingAverage</td><td>2,571.1 us</td><td>15.97 us</td><td>14.94 us</td><td>2,587.0 us</td>
+</tr><tr><td>ExponentialMovingAverageOscillator</td><td>2,202.2 us</td><td>13.10 us</td><td>10.94 us</td><td>2,212.6 us</td>
+</tr><tr><td>HighestHigh</td><td>774.7 us</td><td>4.09 us</td><td>3.41 us</td><td>777.1 us</td>
+</tr><tr><td>HighestClose</td><td>776.4 us</td><td>7.08 us</td><td>6.62 us</td><td>785.3 us</td>
+</tr><tr><td>HistoricalHighestHigh</td><td>672.6 us</td><td>3.29 us</td><td>2.74 us</td><td>675.5 us</td>
+</tr><tr><td>HistoricalHighestClose</td><td>685.6 us</td><td>10.92 us</td><td>10.21 us</td><td>700.2 us</td>
+</tr><tr><td>LowestLow</td><td>814.6 us</td><td>4.73 us</td><td>4.42 us</td><td>819.1 us</td>
+</tr><tr><td>LowestClose</td><td>764.7 us</td><td>9.64 us</td><td>9.02 us</td><td>776.2 us</td>
+</tr><tr><td>HistoricalLowestLow</td><td>692.3 us</td><td>11.23 us</td><td>10.50 us</td><td>701.4 us</td>
+</tr><tr><td>HistoricalLowestClose</td><td>688.2 us</td><td>4.83 us</td><td>4.52 us</td><td>693.6 us</td>
+</tr><tr><td>IchimokuCloud</td><td>5,308.7 us</td><td>104.71 us</td><td>116.39 us</td><td>5,468.8 us</td>
+</tr><tr><td>ModifiedMovingAverage</td><td>1,273.5 us</td><td>10.93 us</td><td>10.22 us</td><td>1,283.9 us</td>
+</tr><tr><td>MacdHist</td><td>3,141.8 us</td><td>13.99 us</td><td>12.40 us</td><td>3,155.8 us</td>
+</tr><tr><td>OnBalanceVolume</td><td>748.2 us</td><td>7.30 us</td><td>6.10 us</td><td>755.6 us</td>
+</tr><tr><td>RawStochasticsValue</td><td>1,536.9 us</td><td>13.28 us</td><td>11.09 us</td><td>1,546.0 us</td>
+</tr><tr><td>RelativeStrength</td><td>2,766.9 us</td><td>16.95 us</td><td>15.86 us</td><td>2,780.0 us</td>
+</tr><tr><td>SimpleMovingAverageOscillator</td><td>1,674.5 us</td><td>26.48 us</td><td>20.67 us</td><td>1,701.5 us</td>
+</tr><tr><td>StandardDeviation</td><td>1,684.5 us</td><td>25.35 us</td><td>21.17 us</td><td>1,713.7 us</td>
+</tr><tr><td>Stochastics_Fast</td><td>2,107.9 us</td><td>46.06 us</td><td>45.24 us</td><td>2,171.8 us</td>
+</tr><tr><td>Stochastics_Slow</td><td>3,069.7 us</td><td>56.49 us</td><td>65.05 us</td><td>3,131.8 us</td>
+</tr><tr><td>Stochastics_Full</td><td>2,800.4 us</td><td>39.44 us</td><td>32.93 us</td><td>2,831.9 us</td>
+</tr><tr><td>StochasticsOscillator_Fast</td><td>2,413.2 us</td><td>35.65 us</td><td>31.60 us</td><td>2,450.9 us</td>
+</tr><tr><td>StochasticsOscillator_Slow</td><td>3,368.0 us</td><td>47.12 us</td><td>44.08 us</td><td>3,436.3 us</td>
+</tr><tr><td>StochasticsOscillator_Full</td><td>3,069.8 us</td><td>20.76 us</td><td>19.42 us</td><td>3,099.2 us</td>
+</tr><tr><td>WeightedMovingAverage</td><td>2,440.0 us</td><td>35.94 us</td><td>33.62 us</td><td>2,485.8 us</td>
+</tr><tr><td>HullMovingAverage</td><td>6,180.2 us</td><td>35.96 us</td><td>30.03 us</td><td>6,214.7 us</td>
+</tr><tr><td>KeltnerChannels</td><td>2,520.4 us</td><td>49.59 us</td><td>97.88 us</td><td>2,656.6 us</td>
+</tr><tr><td>TransformFromTradesToMinute</td><td>2,280.2 us</td><td>35.28 us</td><td>33.00 us</td><td>2,320.8 us</td>
+</tr><tr><td>TransformFromTradesToHourly</td><td>2,140.0 us</td><td>15.35 us</td><td>13.61 us</td><td>2,160.1 us</td>
+</tr><tr><td>TransformFromTradesToBeHourly</td><td>2,208.4 us</td><td>29.37 us</td><td>24.52 us</td><td>2,224.4 us</td>
+</tr><tr><td>TransformFromTradesToDaily</td><td>2,194.7 us</td><td>29.23 us</td><td>27.34 us</td><td>2,232.5 us</td>
+</tr><tr><td>TransformFromTradesToWeekly</td><td>2,179.7 us</td><td>18.46 us</td><td>16.37 us</td><td>2,194.2 us</td>
+</tr></tbody></table>
+</body>
+</html>

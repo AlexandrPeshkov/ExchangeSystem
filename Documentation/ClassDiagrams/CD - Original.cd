@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Trady.Analysis.Infrastructure.AnalyzableBase&lt;TInput, TMappedInput, TOutputToMap, TOutput&gt;">
+    <Position X="62.75" Y="0.5" Width="4" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AEAACIAkABAAAAAACCAAAACACIAQAAAAEAAABAAAAQA=</HashCode>
+      <FileName>Infrastructure\AnalyzableBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Trady.Analysis.Infrastructure.AnalyzableBase&lt;TInput, TOutput&gt;">
+    <Position X="60.25" Y="2.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\AnalyzableBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Infrastructure.AnalyzableFactory" Collapsed="true">
+    <Position X="81.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\AnalyzableFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Infrastructure.CumulativeAnalyzableBase&lt;TInput, TMappedInput, TOutputToMap, TOutput&gt;">
+    <Position X="64.5" Y="2.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAgAAAQAAAgIAAAAAAACAAAA=</HashCode>
+      <FileName>Infrastructure\CumulativeAnalyzableBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Infrastructure.CumulativeAnalyzableBase&lt;TInput, TOutput&gt;">
+    <Position X="64.25" Y="6" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\CumulativeAnalyzableBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Infrastructure.CumulativeNumericAnalyzableBase&lt;TInput, TMappedInput, TOutput&gt;" Collapsed="true">
+    <Position X="68.75" Y="6.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAECAQAAAAAABIAAAAIAAgAAABAgAAAAAAAEBgAAAA=</HashCode>
+      <FileName>Infrastructure\CumulativeNumericAnalyzableBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Trady.Analysis.Infrastructure.FuncAnalyzableFactory" Collapsed="true">
+    <Position X="84.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\FuncAnalyzableFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Infrastructure.FuncRegistry" Collapsed="true">
+    <Position X="81.25" Y="1.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Trady.Analysis.Infrastructure.FuncRegistry.FuncGlobals&lt;TInput&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Infrastructure\FuncRegistry.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAQAAAAFAAAAAAAAQAAABAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Infrastructure\FuncRegistry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Infrastructure.NumericAnalyzableBase&lt;TInput, TMappedInput, TOutput&gt;">
+    <Position X="35.25" Y="2.75" Width="3.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAECAQAAAAAABIAAAAIAAgAAABAgAAAAAAAEBgAAAA=</HashCode>
+      <FileName>Infrastructure\NumericAnalyzableBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Trady.Analysis.Infrastructure.RuleRegistry" Collapsed="true">
+    <Position X="81.25" Y="2.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Trady.Analysis.Infrastructure.RuleRegistry.RuleGlobals" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Infrastructure\RuleRegistry.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AEAQAAAAAQAAAABAAAAAAAAAAAABAAAAAAAAQAAAEAA=</HashCode>
+      <FileName>Infrastructure\RuleRegistry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.AnalyzableTick&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="83" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAACAAAAAAAAAAQAAAAAAAAAQAA=</HashCode>
+      <FileName>AnalyzableTick.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Trady.Analysis.AnalyzeContext&lt;TInput&gt;" Collapsed="true">
+    <Position X="61" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAKAAAABAAAAgQAAAAAAAAAAAAAAAAkAAAQA=</HashCode>
+      <FileName>AnalyzeContext.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Trady.Analysis.AnalyzeContext">
+    <Position X="61.25" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AnalyzeContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Rule" Collapsed="true">
+    <Position X="84.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAgAAAAAAAAAAA=</HashCode>
+      <FileName>Rule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.GenericMovingAverage" Collapsed="true">
+    <Position X="64.75" Y="7.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAABEAACAEAA=</HashCode>
+      <FileName>Indicator\GenericMovingAverage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.FuncAnalyzable&lt;TInput, TOutput&gt;" Collapsed="true">
+    <Position X="14.5" Y="4.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAACAAAAAAABAAAAAAAAABAAAAAIADAAAAAAA=</HashCode>
+      <FileName>Indicator\FuncAnalyzable.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.FuncAnalyzable" Collapsed="true">
+    <Position X="14.5" Y="6" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\FuncAnalyzable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.LowestClose" Collapsed="true">
+    <Position X="83" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\LowestClose.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.ModifiedMovingAverage&lt;TInput, TOutput&gt;" Collapsed="true">
+    <Position X="54.5" Y="4.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Indicator\ModifiedMovingAverage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.ModifiedMovingAverageByTuple" Collapsed="true">
+    <Position X="56.75" Y="6" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\ModifiedMovingAverage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.ModifiedMovingAverage" Collapsed="true">
+    <Position X="52.5" Y="6" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\ModifiedMovingAverage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.MovingAverageConvergenceDivergenceHistogram&lt;TInput, TOutput&gt;" Collapsed="true">
+    <Position X="28.5" Y="4.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAIgAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\MovingAverageConvergenceDivergenceHistogram.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.MovingAverageConvergenceDivergenceHistogramByTuple" Collapsed="true">
+    <Position X="31.5" Y="6" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\MovingAverageConvergenceDivergenceHistogram.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.MovingAverageConvergenceDivergenceHistogram" Collapsed="true">
+    <Position X="26" Y="6" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\MovingAverageConvergenceDivergenceHistogram.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.SimpleMovingAverage&lt;TInput, TOutput&gt;" Collapsed="true">
+    <Position X="20.25" Y="4.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\SimpleMovingAverage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.SimpleMovingAverageByTuple" Collapsed="true">
+    <Position X="22.5" Y="6" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\SimpleMovingAverage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.SimpleMovingAverage" Collapsed="true">
+    <Position X="18.25" Y="6" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\SimpleMovingAverage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.SimpleMovingAverageOscillator&lt;TInput, TOutput&gt;" Collapsed="true">
+    <Position X="38.5" Y="4.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAIAIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\SimpleMovingAverageOscillator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.SimpleMovingAverageOscillatorByTuple" Collapsed="true">
+    <Position X="41" Y="6" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\SimpleMovingAverageOscillator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.SimpleMovingAverageOscillator" Collapsed="true">
+    <Position X="36.25" Y="6" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\SimpleMovingAverageOscillator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.StochasticsOscillator" Collapsed="true">
+    <Position X="83" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\StochasticsOscillator.Fast.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.StochasticsRsiOscillator&lt;TInput, TOutput&gt;" Collapsed="true">
+    <Position X="46.75" Y="4.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>gAAAAMAIIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\StochasticsRsiOscillator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.StochasticsRsiOscillatorByTuple" Collapsed="true">
+    <Position X="49" Y="6" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\StochasticsRsiOscillator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trady.Analysis.Indicator.StochasticsRsiOscillator" Collapsed="true">
+    <Position X="44.75" Y="6" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\StochasticsRsiOscillator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
