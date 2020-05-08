@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CsvHelper;
 using CsvHelper.Configuration;
-using ES.Domain;
+using ES.DataImport.Extensions;
 using ES.Domain.Configurations;
 using ES.Domain.DTO.AphaVantage;
 using ES.Domain.Entities;
 using ES.Domain.Interfaces;
 using ES.Domain.Interfaces.Requests;
 using ES.Domain.Requests.AlphaVantage.GET;
-using ES.Infrastructure.Extensions;
 using Microsoft.Extensions.Options;
 
 namespace ES.DataImport.StockExchangeGateways
@@ -38,7 +37,7 @@ namespace ES.DataImport.StockExchangeGateways
 
         private readonly CsvConfiguration _csvConfiguration;
 
-        public AlphaVantageGateway(IOptions<StockExchangeKeys> tokens, IMapper mapper, CoreDBContext context) : base(tokens, mapper, context)
+        public AlphaVantageGateway(IOptions<StockExchangeKeys> tokens, IMapper mapper) : base(tokens, mapper)
         {
             _csvConfiguration = new CsvConfiguration(CultureInfo.GetCultureInfo("en-US"))
             {

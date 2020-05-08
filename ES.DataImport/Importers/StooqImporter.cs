@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ES.DataImport.Interfaces;
 using ES.Domain.Interfaces;
 using ES.Domain.Period;
-using ES.Infrastructure.Interfaces;
 using StooqApi;
 
 namespace ES.DataImporter.Stooq

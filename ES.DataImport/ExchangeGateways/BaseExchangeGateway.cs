@@ -2,20 +2,16 @@
 using System.Globalization;
 using System.Net.Http;
 using AutoMapper;
-using ES.Domain;
 using ES.Domain.Configurations;
-using ES.Infrastructure.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace ES.DataImport.StockExchangeGateways
 {
-    public abstract class BaseExchangeGateway : IStockExchangeGateway
+    public abstract class BaseExchangeGateway
     {
         private string Scheme => SSL ? "HTTPS" : "HTTPS";
 
         protected abstract string HostName { get; }
-
-        protected readonly CoreDBContext _context;
 
         protected readonly IMapper _mapper;
 
@@ -31,7 +27,7 @@ namespace ES.DataImport.StockExchangeGateways
 
         protected HttpClient _httpClient;
 
-        public BaseExchangeGateway(IOptions<StockExchangeKeys> tokens, IMapper mapper, CoreDBContext context)
+        public BaseExchangeGateway(IOptions<StockExchangeKeys> tokens, IMapper mapper)
         {
             _uriBuilder = new UriBuilder()
             {
@@ -42,7 +38,6 @@ namespace ES.DataImport.StockExchangeGateways
             _tokens = tokens?.Value;
             _cultureInfo = CultureInfo.GetCultureInfo("en-US");
             _mapper = mapper;
-            _context = context;
         }
 
         protected abstract HttpClient AddApiKey(ref HttpClient httpClient);

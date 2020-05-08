@@ -2,7 +2,7 @@
 using System.Web;
 using ES.Domain.Interfaces.Requests;
 
-namespace ES.Infrastructure.Extensions
+namespace ES.DataImport.Extensions
 {
     public static class RequestExtensions
     {

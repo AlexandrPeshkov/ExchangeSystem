@@ -23,8 +23,7 @@ namespace ES.DataImport.Tests
                 AlphaVantage = key
             };
             IOptions<StockExchangeKeys> options = Options.Create(stockExchangeTokens);
-            CoreDBContext context = Context();
-            _stockExchangeGateway = new AlphaVantageGateway(options, _mapper, context);
+            _stockExchangeGateway = new AlphaVantageGateway(options, _mapper);
         }
 
         [Theory]

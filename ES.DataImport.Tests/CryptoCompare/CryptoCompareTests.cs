@@ -25,7 +25,7 @@ namespace ES.DataImport.Tests.CryptoCompare
             };
             IOptions<StockExchangeKeys> options = Options.Create(stockExchangeTokens);
             CoreDBContext context = Context();
-            _gateway = new CryptoCompareGateway(options, _mapper, context);
+            _gateway = new CryptoCompareGateway(options, _mapper);
         }
 
         [Fact]

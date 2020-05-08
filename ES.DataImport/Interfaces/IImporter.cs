@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ES.Domain.Interfaces;
 using ES.Domain.Period;
 
-namespace ES.Infrastructure.Interfaces
+namespace ES.DataImport.Interfaces
 {
     public interface IImporter
     {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ES.DataImport.Interfaces;
 using ES.DataImporter.Extensions;
 using ES.Domain.Interfaces;
 using ES.Domain.Period;
-using ES.Infrastructure.Interfaces;
 using Quandl.NET;
 
 namespace ES.DataImporter.Quandl

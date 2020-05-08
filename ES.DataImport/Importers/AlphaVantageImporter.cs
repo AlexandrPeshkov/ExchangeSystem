@@ -8,10 +8,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
+using ES.DataImport.Interfaces;
 using ES.Domain.Interfaces;
 using ES.Domain.Models;
 using ES.Domain.Period;
-using ES.Infrastructure.Interfaces;
 
 namespace ES.DataImporter.AlphaVantage
 {

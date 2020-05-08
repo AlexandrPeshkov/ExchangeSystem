@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ES.API</name>
+    </assembly>
+    <members>
+        <member name="T:ES.API.Controllers.BaseController">
+            <summary>
+            Базовый контроллер
+            </summary>
+        </member>
+        <member name="T:ES.API.Filters.HttpGlobalExceptionFilter">
+            <summary>
+            Фильтр ошибок
+            </summary>
+        </member>
+        <member name="M:ES.API.Filters.HttpGlobalExceptionFilter.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            Перехват ошибки
+            </summary>
+            <param name="context">ExceptionContext</param>
+        </member>
+        <member name="T:ES.API.ImportDataController">
+            <summary>
+            Управление импортом данных
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
-using ES.Domain;
 using ES.Domain.Configurations;
 using ES.Domain.Entities;
 using ES.Domain.Responses.CryptoCompare;
@@ -15,7 +14,7 @@ namespace ES.DataImport.StockExchangeGateways
 {
     public class CryptoCompareGateway : BaseExchangeGateway
     {
-        public CryptoCompareGateway(IOptions<StockExchangeKeys> tokens, IMapper mapper, CoreDBContext context) : base(tokens, mapper, context)
+        public CryptoCompareGateway(IOptions<StockExchangeKeys> tokens, IMapper mapper) : base(tokens, mapper)
         {
         }
 
@@ -36,7 +35,7 @@ namespace ES.DataImport.StockExchangeGateways
         {
             var currencies = new List<Currency>();
             var httpClient = HttpClient();
-          
+
             _uriBuilder.Path = "data/all/coinlist";
             httpClient = AddApiKey(ref httpClient);
             try
@@ -53,11 +52,11 @@ namespace ES.DataImport.StockExchangeGateways
                             var allDTO = allCoinsResponse.Data.Values.Where(x => x != null && !string.IsNullOrEmpty(x.Name)).ToList();
                             currencies = _mapper.Map<List<Currency>>(allDTO);
 
-                            if (currencies?.Any() == true)
-                            {
-                                await _context.AddRangeAsync(currencies);
-                                await _context.SaveChangesAsync();
-                            }
+                            //if (currencies?.Any() == true)
+                            //{
+                            //    //await _context.AddRangeAsync(currencies);
+                            //    //await _context.SaveChangesAsync();
+                            //}
                         }
                     }
                 }

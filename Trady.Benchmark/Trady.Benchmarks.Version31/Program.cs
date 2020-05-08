@@ -5,13 +5,12 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
-using ES.DataImporter.Csv;
+using ES.Analysis;
+using ES.Analysis.Extension;
 using ES.Domain.Interfaces;
 using ES.Domain.Models;
 using ES.Domain.Period;
 using ES.Infrastructure.Extensions;
-using ES.Analysis.Extension;
-using ES.Analysis;
 
 namespace Trady.Benchmarks.Version31
 {

@@ -9,7 +9,7 @@ namespace ES.DataImport.StockExchangeGateways
 {
     public class CryptoApiGateway : BaseExchangeGateway
     {
-        public CryptoApiGateway(IOptions<StockExchangeKeys> tokens, IMapper mapper, CoreDBContext context) : base(tokens, mapper, context)
+        public CryptoApiGateway(IOptions<StockExchangeKeys> tokens, IMapper mapper) : base(tokens, mapper)
         {
         }
 
