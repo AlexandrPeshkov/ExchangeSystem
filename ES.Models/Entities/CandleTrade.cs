@@ -3,9 +3,9 @@ using ES.Domain.Interfaces;
 
 namespace ES.Domain.Models
 {
-    public class Candle : IOhlcv
+    public class CandleTrade : IOhlcv
     {
-        public Candle(DateTimeOffset dateTime, decimal open, decimal high, decimal low, decimal close, decimal volume)
+        public CandleTrade(DateTime dateTime, decimal open, decimal high, decimal low, decimal close, decimal volume)
         {
             DateTime = dateTime;
             Open = open;
@@ -15,7 +15,7 @@ namespace ES.Domain.Models
             Volume = volume;
         }
 
-        public DateTimeOffset DateTime { get; set; }
+        public DateTime DateTime { get; set; }
 
         public decimal Open { get; set; }
 

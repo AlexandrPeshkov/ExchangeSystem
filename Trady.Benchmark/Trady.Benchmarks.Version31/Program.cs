@@ -37,7 +37,7 @@ namespace Trady.Benchmarks.Version31
             _data = importer.ImportAsync("EURUSD").Result.ToArray();
 
             _tradeData = new ITickTrade[_n];
-            var d = DateTimeOffset.Now;
+            var d = DateTime.Now;
             for (int i = 0; i < _n; i++)
             {
                 _tradeData[i] = new Trade(d.AddSeconds(i), 1, 1);

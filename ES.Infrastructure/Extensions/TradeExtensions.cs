@@ -62,7 +62,7 @@ namespace ES.Infrastructure.Extensions
             var low = trades.Min(trade => trade.Price);
             var close = trades.Last().Price;
             var volume = trades.Sum(stick => stick.Volume);
-            return new Candle(dateTime, open, high, low, close, volume);
+            return new CandleTrade(dateTime, open, high, low, close, volume);
         }
     }
 }

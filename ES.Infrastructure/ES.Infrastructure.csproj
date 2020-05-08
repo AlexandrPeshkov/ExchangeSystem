@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Mapper\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="CsvHelper" Version="15.0.5" />
     <PackageReference Include="Quandl.NET" Version="1.2.1" />
     <PackageReference Include="StooqApi" Version="1.1.1" />
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ES.Models\ES.Domain.csproj" />
+    <ProjectReference Include="..\ES.Domain\ES.Data.csproj" />
   </ItemGroup>
 
 </Project>

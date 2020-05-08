@@ -34,7 +34,7 @@ namespace Trady.Test
             int seconds = minutes * 60;
 
             var _tradeData = new ITickTrade[seconds];
-            var d = new DateTimeOffset(new DateTime(2019, 1, 1));
+            var d = new DateTime(2019, 1, 1);
             for (int i = 0; i < seconds; i++)
             {
                 _tradeData[i] = new Trade(d.AddSeconds(i), 1, 1);

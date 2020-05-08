@@ -10,13 +10,13 @@ namespace ES.Domain.Period
 
         public override uint OrderOfTransformation => 1;
 
-        public override bool IsTimestamp(DateTimeOffset dateTime)
+        public override bool IsTimestamp(DateTime dateTime)
             => dateTime.TimeOfDay == new TimeSpan(0, 0, 0);
 
-        protected override DateTimeOffset ComputeTimestampByCorrectedPeriodCount(DateTimeOffset dateTime, int correctedPeriodCount)
-            => dateTime.DateTime.Truncate(TimeSpan.FromDays(1)).AddDays(correctedPeriodCount);
+        protected override DateTime ComputeTimestampByCorrectedPeriodCount(DateTime dateTime, int correctedPeriodCount)
+            => dateTime.Truncate(TimeSpan.FromDays(1)).AddDays(correctedPeriodCount);
 
-        protected override DateTimeOffset FloorByDay(DateTimeOffset dateTime, bool isPositivePeriodCount)
+        protected override DateTime FloorByDay(DateTime dateTime, bool isPositivePeriodCount)
             => dateTime.AddDays(isPositivePeriodCount ? 1 : -1);
     }
 }

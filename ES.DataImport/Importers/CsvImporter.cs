@@ -74,7 +74,7 @@ namespace ES.DataImporter.Csv
         public IOhlcv GetRecord(CsvReader csv)
         {
             // By using GetField Method of the CSV Reader Culture Info set in the configuration is used
-            return new Candle(
+            return new CandleTrade(
                 string.IsNullOrWhiteSpace(_format) ? csv.GetField<DateTime>(0) : DateTime.ParseExact(csv.GetField<string>(0), _format, _culture),
                 csv.GetField<decimal>(1),
                 csv.GetField<decimal>(2),

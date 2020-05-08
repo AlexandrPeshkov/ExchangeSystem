@@ -8,7 +8,7 @@ using ES.Domain.Models;
 
 namespace ES.Analysis
 {
-    public abstract class IndexedCandleBase : Candle, IIndexedOhlcv
+    public abstract class IndexedCandleBase : CandleTrade, IIndexedOhlcv
     {
         private IAnalyzeContext _context;
 

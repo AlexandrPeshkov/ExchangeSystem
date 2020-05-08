@@ -39,7 +39,7 @@ namespace ES.DataImporter.Stooq
                 throw new ArgumentException("This importer only supports daily, weekly & monthly data");
 
             var candles = await StooqApi.Stooq.GetHistoricalAsync(symbol, PeriodMap[period], startTime, endTime, SkipOption.None, false, token);
-            return candles.Select(c => new ES.Domain.Models.Candle(c.DateTime, c.Open, c.High, c.Low, c.Close, c.Volume)).OrderBy(c => c.DateTime).ToList();
+            return candles.Select(c => new ES.Domain.Models.CandleTrade(c.DateTime, c.Open, c.High, c.Low, c.Close, c.Volume)).OrderBy(c => c.DateTime).ToList();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ES.Analysis.Infrastructure
         private readonly bool _isTInputIOhlcvData, _isTOutputAnalysis;
 
         internal protected readonly IReadOnlyList<TMappedInput> _mappedInputs;
-        private readonly IReadOnlyList<DateTimeOffset> _mappedDateTimes;
+        private readonly IReadOnlyList<DateTime> _mappedDateTimes;
 
         protected AnalyzableBase(IEnumerable<TInput> inputs, Func<TInput, TMappedInput> inputMapper)
         {

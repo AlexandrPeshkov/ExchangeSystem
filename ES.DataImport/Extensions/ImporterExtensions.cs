@@ -19,7 +19,7 @@ namespace ES.DataImporter.Extensions
 
         public static IOhlcv CreateIOhlcvData(this object[] row)
         {
-            return new Candle(
+            return new CandleTrade(
                 Convert.ToDateTime(row[0], CultureInfo.InvariantCulture),
                 Convert.ToDecimal(row[1], CultureInfo.InvariantCulture),
                 Convert.ToDecimal(row[2], CultureInfo.InvariantCulture),

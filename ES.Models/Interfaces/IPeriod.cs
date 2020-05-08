@@ -4,12 +4,12 @@ namespace ES.Domain.Period
 {
     public interface IPeriod
     {
-        DateTimeOffset TimestampAt(DateTimeOffset dateTime, int periodCount);
+        DateTime TimestampAt(DateTime dateTime, int periodCount);
 
-        DateTimeOffset PrevTimestamp(DateTimeOffset dateTime);
+        DateTime PrevTimestamp(DateTime dateTime);
 
-        DateTimeOffset NextTimestamp(DateTimeOffset dateTime);
+        DateTime NextTimestamp(DateTime dateTime);
 
-        bool IsTimestamp(DateTimeOffset dateTime);
+        bool IsTimestamp(DateTime dateTime);
     }
 }

@@ -86,7 +86,7 @@ namespace ES.DataImporter.AlphaVantage
                 default:
                     break;
             }
-            query = $"/query?{function}&symbol={symbol}&apikey={ApiKey}&outputsize={OutputSize.ToString()}&datatype=csv";
+            query = $"/query?{function}&symbol={symbol}&apikey={ApiKey}&outputsize={OutputSize}&datatype=csv";
             var csvStream = await Client.GetStreamAsync(query);
 
             TextReader textReader = new StreamReader(csvStream);
@@ -96,7 +96,7 @@ namespace ES.DataImporter.AlphaVantage
 
             using (var csvReader = new CsvReader(textReader, new CsvConfiguration(cultureInfo) { Delimiter = ",", HasHeaderRecord = true }))
             {
-                bool isHeaderBypassed = false;
+                var isHeaderBypassed = false;
                 while (csvReader.Read())
                 {
                     // HasHeaderRecord is not working for CsvReader 6.0.2
@@ -120,7 +120,7 @@ namespace ES.DataImporter.AlphaVantage
         public IOhlcv GetRecord(CsvReader csv, string format, CultureInfo culture)
         {
             // By using GetField Methodo of the CSV Reader Culture Info set in the configuration is used
-            return new Candle(
+            return new CandleTrade(
                 string.IsNullOrWhiteSpace(format) ? csv.GetField<DateTime>(0) : DateTime.ParseExact(csv.GetField<string>(0), format, culture),
                 csv.GetField<decimal>(1),
                 csv.GetField<decimal>(2),

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ES.Domain.Interfaces;
 using ES.Analysis.Infrastructure;
-using ES.Analysis;
+using ES.Domain.Interfaces;
 
 namespace ES.Analysis.Indicator
 {

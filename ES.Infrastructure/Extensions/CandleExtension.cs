@@ -40,13 +40,13 @@ namespace ES.Infrastructure.Extensions
                 throw new InvalidTransformationException(typeof(TSourcePeriod), typeof(TTargetPeriod));
 
             var outputCandles = new List<IOhlcv>();
-            var periodInstance = Activator.CreateInstance<TTargetPeriod>();
+            TTargetPeriod periodInstance = Activator.CreateInstance<TTargetPeriod>();
 
             // To prevent lazy evaluated when compute
             var orderedCandles = candles.OrderBy(c => c.DateTime).ToList();
 
-            var periodStartTime = orderedCandles[0].DateTime;
-            var periodEndTime = periodInstance.NextTimestamp(periodStartTime);
+            DateTime periodStartTime = orderedCandles[0].DateTime;
+            DateTime periodEndTime = periodInstance.NextTimestamp(periodStartTime);
 
             var tempCandles = new List<IOhlcv>();
             for (int i = 0; i < orderedCandles.Count; i++)
@@ -82,7 +82,8 @@ namespace ES.Infrastructure.Extensions
         {
             var periodInstance = Activator.CreateInstance<TPeriod>();
             err = default;
-            var offset = candles.Any() ? candles.First().DateTime.Offset.Hours : 0;
+            var offset = candles.Any() ? candles.First().DateTime.Hour : 0;
+
             for (int i = 0; i < candles.Count() - 1; i++)
             {
                 var nextTime = periodInstance.NextTimestamp(candles.ElementAt(i).DateTime);
@@ -128,7 +129,7 @@ namespace ES.Infrastructure.Extensions
             var low = candles.Min(stick => stick.Low);
             var close = candles.Last().Close;
             var volume = candles.Sum(stick => stick.Volume);
-            return new Candle(dateTime, open, high, low, close, volume);
+            return new CandleTrade(dateTime, open, high, low, close, volume);
         }
 
 

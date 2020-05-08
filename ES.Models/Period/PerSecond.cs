@@ -6,7 +6,7 @@ namespace ES.Domain.Period
     {
         public override uint NumberOfSecond => 1;
 
-        public override bool IsTimestamp(DateTimeOffset dateTime)
+        public override bool IsTimestamp(DateTime dateTime)
             => dateTime.Millisecond == 0;
     }
 }

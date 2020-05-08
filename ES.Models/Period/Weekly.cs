@@ -10,13 +10,13 @@ namespace ES.Domain.Period
 
         public override uint OrderOfTransformation => 7;
 
-        public override bool IsTimestamp(DateTimeOffset dateTime)
+        public override bool IsTimestamp(DateTime dateTime)
             => dateTime.DayOfWeek == DayOfWeek.Sunday && dateTime.TimeOfDay == new TimeSpan(0, 0, 0);
 
-        protected override DateTimeOffset ComputeTimestampByCorrectedPeriodCount(DateTimeOffset dateTime, int correctedPeriodCount)
+        protected override DateTime ComputeTimestampByCorrectedPeriodCount(DateTime dateTime, int correctedPeriodCount)
             => dateTime.AddDays(-(int)dateTime.DayOfWeek).AddDays(correctedPeriodCount * 7).Date;
 
-        protected override DateTimeOffset FloorByDay(DateTimeOffset dateTime, bool isPositivePeriodCount)
+        protected override DateTime FloorByDay(DateTime dateTime, bool isPositivePeriodCount)
             => dateTime.AddDays(1);
     }
 }

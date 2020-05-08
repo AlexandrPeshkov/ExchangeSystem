@@ -10,6 +10,6 @@ namespace ES.Domain.Period
 
         public abstract uint OrderOfTransformation { get; }
 
-        protected abstract DateTimeOffset FloorByDay(DateTimeOffset dateTime, bool isPositivePeriodCount);
+        protected abstract DateTime FloorByDay(DateTime dateTime, bool isPositivePeriodCount);
     }
 }
