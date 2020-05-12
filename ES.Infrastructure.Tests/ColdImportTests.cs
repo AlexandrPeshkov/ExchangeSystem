@@ -42,25 +42,30 @@ namespace ES.Infrastructure.Tests
         [Fact]
         public async Task ImportAllExchangePairs()
         {
-            //using (var cntx = Context())
-            //{
-            //    Currency currency = new Currency
-            //    {
-            //        Symbol = "BTC"
-            //    };
-            //    cntx.Currencies.Add(currency);
-            //    cntx.SaveChanges();
-            //}
+            using (var cntx = Context())
+            {
+                Currency currency = new Currency
+                {
+                    Symbol = "BTC"
+                };
+                cntx.Currencies.Add(currency);
+                cntx.SaveChanges();
+            }
 
-            //using (var cntx = Context())
-            //{
-            //    Currency currency = new Currency
-            //    {
-            //        Symbol = "ETH"
-            //    };
-            //    cntx.Currencies.Add(currency);
-            //    cntx.SaveChanges();
-            //}
+            using (var cntx = Context())
+            {
+                Currency currency = new Currency
+                {
+                    Symbol = "BTC"
+                };
+                cntx.Currencies.Add(currency);
+                cntx.SaveChanges();
+            }
+
+            using (var cntx = Context())
+            {
+                var all = cntx.Currencies.ToList();
+            }
 
             //using (var cntx = Context())
             //{

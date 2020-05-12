@@ -5,5 +5,7 @@
         public const string ContentType = "Content-Type";
 
         public const string CryptoAPIKeyHeader = "x-api-key";
+
+        public const string CryptoCompareAppName = "[DSTU]ExchangeStorageSystem";
     }
 }

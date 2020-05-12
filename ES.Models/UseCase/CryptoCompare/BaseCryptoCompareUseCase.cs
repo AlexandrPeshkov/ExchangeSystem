@@ -9,6 +9,7 @@ using ES.Domain.Interfaces.Requests;
 using Newtonsoft.Json;
 using ES.Domain.Responses.CryptoCompare;
 using AutoMapper;
+using ES.Domain.Constants;
 
 namespace ES.Domain.UseCase.CryptoCompare
 {
@@ -56,7 +57,7 @@ namespace ES.Domain.UseCase.CryptoCompare
 
         protected override HttpClient AddApiKey(ref HttpClient httpClient, UriBuilder uriBuilder)
         {
-            uriBuilder.Query = $"apikey={_keys.CryptoCompare}";
+            uriBuilder.Query = $"apikey={_keys.CryptoCompare}extraParams={HttpConstants.CryptoCompareAppName}";
             return httpClient;
         }
     }

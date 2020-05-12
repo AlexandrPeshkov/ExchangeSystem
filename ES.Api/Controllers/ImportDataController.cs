@@ -16,8 +16,12 @@ namespace ES.API.Controllers
             _importMetaDataService = importMetaDataService;
         }
 
-        [HttpGet(nameof(LoadCurrencies))]
-        public async Task<IActionResult> LoadCurrencies()
+        /// <summary>
+        /// Загрузка списка бирж, валют и активных пар
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet(nameof(LoadColdData))]
+        public async Task<IActionResult> LoadColdData()
         {
             await _importMetaDataService.ImportAllCurrencies();
             await _importMetaDataService.ImportAllExchanges();

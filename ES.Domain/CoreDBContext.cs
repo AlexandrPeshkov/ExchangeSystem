@@ -20,17 +20,19 @@ namespace ES.Domain
             modelBuilder.Entity<Exchange>(e =>
             {
                 e.HasMany(x => x.Pairs).WithOne(x => x.Exchange).HasForeignKey(x => x.ExchangeId);
+                e.HasAlternateKey(e => e.Name);
             });
 
             modelBuilder.Entity<Currency>(e =>
             {
                 e.HasMany<ExchangePair>().WithOne(x => x.CurrencyTo).HasForeignKey(x => x.CurrencyToId);
                 e.HasMany<ExchangePair>().WithOne(x => x.CurrencyFrom).HasForeignKey(x => x.CurrencyFromId);
+                e.HasAlternateKey(e => e.Symbol);
             });
 
             modelBuilder.Entity<ExchangePair>(e =>
             {
-                e.ToTable("Pairs");
+                e.ToTable(nameof(Pairs));
             });
 
         }
