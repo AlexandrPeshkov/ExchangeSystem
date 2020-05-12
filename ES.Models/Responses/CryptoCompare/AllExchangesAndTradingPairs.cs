@@ -11,7 +11,7 @@ namespace ES.Domain.Responses.CryptoCompare
             {
                 public class CryptoComparePair
                 {
-                    public Dictionary<string, string> TSYMS { get; set; }
+                    public Dictionary<string, Dictionary<string, string>> TSYMS { get; set; }
                 }
 
                 public Dictionary<string, CryptoComparePair> Pairs { get; set; }

@@ -12,22 +12,27 @@ namespace ES.DataImport.StockExchangeGateways
     {
         private readonly AllCurrenciesUseCase _allCoinsUseCase;
 
-        private readonly AllExchangesAndPairsUseCase _allExchangesAndPairsUseCase;
+        private readonly AllExchangesAndPairsUseCase _allExchangePairsUseCase;
 
-        protected override string HostName => "min-api.cryptocompare.com";
-
-        public CryptoCompareGateway(IMapper mapper,
-            AllCurrenciesUseCase allCoinsUseCase,
-            AllExchangesAndPairsUseCase allExchangesAndPairsUseCase) : base(mapper)
-        {
-            _allCoinsUseCase = allCoinsUseCase;
-            _allExchangesAndPairsUseCase = allExchangesAndPairsUseCase;
-        }
+        private readonly AllExchangesUseCase _allExchangesUseCase;
 
         protected override RequestLimitConfiguration Limits => new RequestLimitConfiguration
         {
             MonthLimit = 100000
         };
+
+        protected override string HostName => "min-api.cryptocompare.com";
+
+        public CryptoCompareGateway(IMapper mapper,
+            AllCurrenciesUseCase allCoinsUseCase,
+            AllExchangesAndPairsUseCase allExchangesAndPairsUseCase,
+            AllExchangesUseCase allExchangesUseCase)
+            : base(mapper)
+        {
+            _allCoinsUseCase = allCoinsUseCase;
+            _allExchangePairsUseCase = allExchangesAndPairsUseCase;
+            _allExchangesUseCase = allExchangesUseCase;
+        }
 
         public async Task<List<Currency>> ImportAllCurrencies()
         {
@@ -35,10 +40,16 @@ namespace ES.DataImport.StockExchangeGateways
             return currencies;
         }
 
-        public async Task<List<ExchangePairsDTO>> ImportAllExchangeAndPairs()
+        public async Task<List<ExchangePairsDTO>> ImportAllExchangePairs()
         {
-            List<ExchangePairsDTO> exchangePairsDTOs = await _allExchangesAndPairsUseCase.Execute(_emptyRequest, _uriBuilder);
+            List<ExchangePairsDTO> exchangePairsDTOs = await _allExchangePairsUseCase.Execute(_emptyRequest, _uriBuilder);
             return exchangePairsDTOs;
+        }
+
+        public async Task<List<ExchangeDTO>> ImportAllExchanges()
+        {
+            List<ExchangeDTO> exchanges = await _allExchangesUseCase.Execute(_emptyRequest, _uriBuilder);
+            return exchanges;
         }
     }
 }

@@ -25,12 +25,22 @@ namespace ES.DataImport.Tests.CryptoCompare
         }
 
         [Fact]
-        public async Task ImportAllExchangeasAndPairs()
+        public async Task ImportAllExchangesAndPairs()
         {
-            var exchangePairs = await _gateway.ImportAllExchangeAndPairs();
+            var exchangePairs = await _gateway.ImportAllExchangePairs();
 
             Assert.NotEmpty(exchangePairs);
             Assert.True(exchangePairs.Exists(e => e.Pairs.Count > 0));
+        }
+
+        [Fact]
+        public async Task ImportAllExchanges()
+        {
+            var exchanges = await _gateway.ImportAllExchanges();
+
+            Assert.NotEmpty(exchanges);
+            Assert.True(exchanges.Exists(e => e.GradePoints > 0));
+            Assert.True(exchanges.Exists(e => string.IsNullOrEmpty(e.AffiliateURL) == false));
         }
     }
 }

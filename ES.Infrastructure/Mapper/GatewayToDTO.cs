@@ -9,6 +9,8 @@ namespace ES.Infrastructure.Mapper
         public GatewayToDTO()
         {
             CreateMap<CurrencyDTO, Currency>();
+            CreateMap<ExchangeDTO, Exchange>()
+                .ForMember(d => d.WebSite, d => d.MapFrom(s => s.AffiliateURL));
         }
     }
 }

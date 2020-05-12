@@ -32,20 +32,19 @@ namespace ES.Domain.UseCase.CryptoCompare
 
                     foreach (var pairs in exchange.Value.Pairs)
                     {
-                        //foreach (var pairs in exchangeData.Value.Pairs)
+                        foreach (var currTo in pairs.Value.TSYMS.Keys)
                         {
-                            foreach (var tsyms in pairs.Value.TSYMS)
+                            var pairDTO = new PairDTO
                             {
-                                PairDTO pairDTO = new PairDTO
-                                {
-                                    CurrencyFrom = pairs.Key,
-                                    CurrencyTo = tsyms.Key
-                                };
+                                CurrencyFrom = pairs.Key,
+                                CurrencyTo = currTo
+                            };
 
-                                exchangePairsDTO.Pairs.Add(pairDTO);
-                            }
+                            exchangePairsDTO.Pairs.Add(pairDTO);
+
                         }
                     }
+                    exchangePairs.Add(exchangePairsDTO);
                 }
             }
             return exchangePairs;

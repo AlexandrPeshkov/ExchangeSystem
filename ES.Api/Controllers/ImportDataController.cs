@@ -9,9 +9,9 @@ namespace ES.API.Controllers
     /// </summary>
     public class ImportDataController : BaseController
     {
-        private readonly ImportMetaDataService _importMetaDataService;
+        private readonly ImportColdDataService _importMetaDataService;
 
-        public ImportDataController(ImportMetaDataService importMetaDataService)
+        public ImportDataController(ImportColdDataService importMetaDataService)
         {
             _importMetaDataService = importMetaDataService;
         }
@@ -20,6 +20,8 @@ namespace ES.API.Controllers
         public async Task<IActionResult> LoadCurrencies()
         {
             await _importMetaDataService.ImportAllCurrencies();
+            await _importMetaDataService.ImportAllExchanges();
+            await _importMetaDataService.ImportAllExchangePairs();
             return Ok();
         }
     }

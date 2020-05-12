@@ -54,7 +54,7 @@ namespace TestInfrastructure
             services.AddTransient(provider => Context());
 
             services.AddTransient<CryptoCompareGateway>();
-            services.AddTransient<ImportMetaDataService>();
+            services.AddTransient<ImportColdDataService>();
 
             AddUseCases(services);
             ServiceProvider serviceProvider = services.BuildServiceProvider();

@@ -28,8 +28,8 @@ namespace ES.Domain.UseCase.CryptoCompare
 
             if (response?.IsSuccessStatusCode == true)
             {
-                //var json = await response.Content.ReadAsStringAsync();
-                var json = await ReadJsonBackup("CryptoCompare", "ExchangesAndPairs");
+                var json = await response.Content.ReadAsStringAsync();
+                //var json = await ReadJsonBackup("CryptoCompare", "ExchangeAndPairs");
 
                 if (string.IsNullOrEmpty(json) == false)
                 {

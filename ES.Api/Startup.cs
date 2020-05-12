@@ -58,7 +58,7 @@ namespace ES.Api
             });
 
             services.AddTransient<CryptoCompareGateway>();
-            services.AddTransient<ImportMetaDataService>();
+            services.AddTransient<ImportColdDataService>();
             AddUseCases(services);
         }
 
