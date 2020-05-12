@@ -47,16 +47,17 @@ namespace ES.Api
                 c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\ES.API.XML");
             });
 
-
             services.AddDbContext<CoreDBContext>(options =>
             {
                 options.UseNpgsql(
-                    Configuration.GetConnectionString(ContextContstants.ConnectionStringName));
+                    Configuration.GetConnectionString(ContextContstants.ConnectionStringCoreDB));
+
+                options.UseNpgsql(
+                    Configuration.GetConnectionString(ContextContstants.ConnectionStringLogsDB));
             });
 
             services.AddTransient<CryptoCompareGateway>();
-            //services.AddSingleton<InitImportService>();
-
+            services.AddTransient<ImportMetaDataService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -66,6 +67,8 @@ namespace ES.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseRouting();
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -74,11 +77,8 @@ namespace ES.Api
                 c.RoutePrefix = "";
             });
 
-           
-
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
-
-            app.UseRouting();
 
             app.UseAuthorization();
 

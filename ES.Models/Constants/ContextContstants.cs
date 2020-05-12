@@ -2,6 +2,8 @@
 {
     public static class ContextContstants
     {
-        public const string ConnectionStringName = "ExchangeSystem";
+        public const string ConnectionStringCoreDB = "ExchangeSystem";
+
+        public const string ConnectionStringLogsDB = "Logs";
     }
 }
