@@ -1,13 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using ES.DataImport.StockExchangeGateways;
-using ES.Domain;
-using ES.Domain.Configurations;
+﻿using System.Threading.Tasks;
 using ES.Domain.Entities;
 using ES.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection;
 using TestInfrastructure;
 using Xunit;
 
@@ -19,18 +14,7 @@ namespace ES.Infrastructure.Tests
 
         public DBImportServiceTests()
         {
-            var section = _configurationRoot?.GetSection(nameof(StockExchangeKeys));
-            var key = section?.GetChildren()?.FirstOrDefault(p => p?.Key == "CryptoCompare")?.Value?.ToString();
-
-            StockExchangeKeys stockExchangeTokens = new StockExchangeKeys
-            {
-                CryptoCompare = key
-            };
-            IOptions<StockExchangeKeys> options = Options.Create(stockExchangeTokens);
-            CoreDBContext context = Context();
-            CryptoCompareGateway gateway = new CryptoCompareGateway(options, _mapper);
-
-            _importMetaDataService = new ImportMetaDataService(gateway, context);
+            _importMetaDataService = _services.GetService<ImportMetaDataService>();
         }
 
         [Fact]

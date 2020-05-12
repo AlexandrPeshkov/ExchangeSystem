@@ -1,15 +1,11 @@
-﻿using System.Net.Http;
-using AutoMapper;
-using ES.Domain;
+﻿using AutoMapper;
 using ES.Domain.Configurations;
-using ES.Domain.Constants;
-using Microsoft.Extensions.Options;
 
 namespace ES.DataImport.StockExchangeGateways
 {
     public class CryptoApiGateway : BaseExchangeGateway
     {
-        public CryptoApiGateway(IOptions<StockExchangeKeys> tokens, IMapper mapper) : base(tokens, mapper)
+        public CryptoApiGateway(IMapper mapper) : base(mapper)
         {
         }
 
@@ -20,18 +16,5 @@ namespace ES.DataImport.StockExchangeGateways
             SecondLimit = 3,
             DayLimit = 500,
         };
-
-        protected override HttpClient CreateHttpClient()
-        {
-            var httpClient = base.CreateHttpClient();
-            httpClient.DefaultRequestHeaders.Add(HttpConstants.ContentType, "application/json");
-            return httpClient;
-        }
-
-        protected override HttpClient AddApiKey(ref HttpClient httpClient)
-        {
-            httpClient.DefaultRequestHeaders.Add(HttpConstants.CryptoAPIKeyHeader, _tokens.CryptoAPI);
-            return httpClient;
-        }
     }
 }

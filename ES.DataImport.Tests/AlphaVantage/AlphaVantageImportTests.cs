@@ -8,32 +8,35 @@ using ES.Domain.Interfaces;
 using Microsoft.Extensions.Options;
 using TestInfrastructure;
 using Xunit;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ES.DataImport.Tests
 {
     public class AlphaVantageImportTests : BaseTest
     {
         private readonly AlphaVantageGateway _stockExchangeGateway;
+
         public AlphaVantageImportTests()
         {
-            var key = _configurationRoot.GetSection(nameof(StockExchangeKeys)).GetChildren().FirstOrDefault(p => p.Key == "AlphaVantage").Value?.ToString();
+            //var key = _configurationRoot.GetSection(nameof(StockExchangeKeys)).GetChildren().FirstOrDefault(p => p.Key == "AlphaVantage").Value?.ToString();
 
-            StockExchangeKeys stockExchangeTokens = new StockExchangeKeys
-            {
-                AlphaVantage = key
-            };
-            IOptions<StockExchangeKeys> options = Options.Create(stockExchangeTokens);
-            _stockExchangeGateway = new AlphaVantageGateway(options, _mapper);
+            //StockExchangeKeys stockExchangeTokens = new StockExchangeKeys
+            //{
+            //    AlphaVantage = key
+            //};
+            //IOptions<StockExchangeKeys> options = Options.Create(stockExchangeTokens);
+            //_stockExchangeGateway = new AlphaVantageGateway(options, _mapper);
+            _stockExchangeGateway = _services.GetService<AlphaVantageGateway>();
         }
 
-        [Theory]
-        [InlineData("BTC", "USD")]
-        public async Task ImportTimeSeries(string symbol, string market)
-        {
-            IReadOnlyList<IOhlcv> timeSeries = await _stockExchangeGateway.ImportTimeSeriesDaily(symbol, market);
+        //[Theory]
+        //[InlineData("BTC", "USD")]
+        //public async Task ImportTimeSeries(string symbol, string market)
+        //{
+        //    IReadOnlyList<IOhlcv> timeSeries = await _stockExchangeGateway.ImportTimeSeriesDaily(symbol, market);
 
-            Assert.NotEmpty(timeSeries);
-            Assert.True(timeSeries.All(s => s.DateTime != default));
-        }
+        //    Assert.NotEmpty(timeSeries);
+        //    Assert.True(timeSeries.All(s => s.DateTime != default));
+        //}
     }
 }

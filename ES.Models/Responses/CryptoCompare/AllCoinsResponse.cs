@@ -3,7 +3,7 @@ using ES.Domain.DTO.CryptoCompare;
 
 namespace ES.Domain.Responses.CryptoCompare
 {
-    public class AllCoinsResponse : BaseCryptoCompareResponse<Dictionary<string, CurrencyDTO>>
+    public class AllCurrenciesResponse : BaseCryptoCompareResponse<Dictionary<string, CurrencyDTO>>
     {
     }
 }

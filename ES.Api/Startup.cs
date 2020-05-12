@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using AutoMapper;
 using ES.API.Filters;
 using ES.DataImport.StockExchangeGateways;
 using ES.Domain;
+using ES.Domain.Commands;
 using ES.Domain.Configurations;
 using ES.Domain.Constants;
+using ES.Domain.Interfaces.UseCases;
 using ES.Infrastructure.Mapper;
 using ES.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
@@ -51,13 +55,23 @@ namespace ES.Api
             {
                 options.UseNpgsql(
                     Configuration.GetConnectionString(ContextContstants.ConnectionStringCoreDB));
-
-                options.UseNpgsql(
-                    Configuration.GetConnectionString(ContextContstants.ConnectionStringLogsDB));
             });
 
             services.AddTransient<CryptoCompareGateway>();
             services.AddTransient<ImportMetaDataService>();
+            AddUseCases(services);
+        }
+
+        private void AddUseCases(IServiceCollection services)
+        {
+            var assembly = Assembly.GetAssembly(typeof(IUseCase<,,>))
+                .GetTypes()
+                .Where(t => t.IsGenericType == false && t.GetInterfaces().FirstOrDefault(i => i?.Name == typeof(IUseCase<,,>)?.Name) != null);
+
+            foreach (var useCase in assembly)
+            {
+                services.AddTransient(useCase);
+            }
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

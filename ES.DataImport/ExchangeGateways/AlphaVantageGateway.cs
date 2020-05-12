@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CsvHelper;
 using CsvHelper.Configuration;
-using ES.DataImport.Extensions;
 using ES.Domain.Configurations;
 using ES.Domain.DTO.AphaVantage;
 using ES.Domain.Entities;
+using ES.Domain.Extensions;
 using ES.Domain.Interfaces;
 using ES.Domain.Interfaces.Requests;
 using ES.Domain.Requests.AlphaVantage.GET;
-using Microsoft.Extensions.Options;
 
 namespace ES.DataImport.StockExchangeGateways
 {
@@ -37,7 +36,7 @@ namespace ES.DataImport.StockExchangeGateways
 
         private readonly CsvConfiguration _csvConfiguration;
 
-        public AlphaVantageGateway(IOptions<StockExchangeKeys> tokens, IMapper mapper) : base(tokens, mapper)
+        public AlphaVantageGateway(IMapper mapper) : base(mapper)
         {
             _csvConfiguration = new CsvConfiguration(CultureInfo.GetCultureInfo("en-US"))
             {
@@ -46,11 +45,11 @@ namespace ES.DataImport.StockExchangeGateways
             };
         }
 
-        protected override HttpClient AddApiKey(ref HttpClient httpClient)
-        {
-            _uriBuilder.Query = $"apikey={_tokens.AlphaVantage}";
-            return httpClient;
-        }
+        //protected override HttpClient AddApiKey(ref HttpClient httpClient)
+        //{
+        //    _uriBuilder.Query = $"apikey={_tokens.AlphaVantage}";
+        //    return httpClient;
+        //}
 
         /// <summary>
         /// Импорт исторических данных
@@ -59,66 +58,66 @@ namespace ES.DataImport.StockExchangeGateways
         /// <param name="market">Валюта</param>
         /// <param name="function">Периодичность</param>
         /// <returns></returns>
-        private async Task<IReadOnlyList<DigitalCurrency>> ImportTimeSeries(IExchangeRequest request)
-        {
-            List<DigitalCurrency> digitalCurrencies = new List<DigitalCurrency>();
+        //private async Task<IReadOnlyList<DigitalCurrency>> ImportTimeSeries(IExchangeRequest request)
+        //{
+        //    List<DigitalCurrency> digitalCurrencies = new List<DigitalCurrency>();
 
-            string query = request?.ToQuery();
-            _uriBuilder.Query = query;
+        //    string query = request?.ToQuery();
+        //    _uriBuilder.Query = query;
 
-            HttpClient httpClient = CreateHttpClient();
-            Stream stream = await httpClient.GetStreamAsync(_uriBuilder.Uri);
+        //    HttpClient httpClient = CreateHttpClient();
+        //    Stream stream = await httpClient.GetStreamAsync(_uriBuilder.Uri);
 
-            if (stream != null)
-            {
-                using (TextReader textReader = new StreamReader(stream))
-                {
-                    using (var csvReader = new CsvReader(textReader, _csvConfiguration))
-                    {
-                        try
-                        {
-                            csvReader?.Read();
-                            csvReader?.ReadHeader();
+        //    if (stream != null)
+        //    {
+        //        using (TextReader textReader = new StreamReader(stream))
+        //        {
+        //            using (var csvReader = new CsvReader(textReader, _csvConfiguration))
+        //            {
+        //                try
+        //                {
+        //                    csvReader?.Read();
+        //                    csvReader?.ReadHeader();
 
-                            while (csvReader?.Read() == true)
-                            {
-                                DigitalCurrency digitalCurrency = ReadCurrency(csvReader, _cultureInfo);
-                                if (digitalCurrencies != null)
-                                {
-                                    digitalCurrencies.Add(digitalCurrency);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                        }
-                    }
-                }
-            }
+        //                    while (csvReader?.Read() == true)
+        //                    {
+        //                        DigitalCurrency digitalCurrency = ReadCurrency(csvReader, _cultureInfo);
+        //                        if (digitalCurrencies != null)
+        //                        {
+        //                            digitalCurrencies.Add(digitalCurrency);
+        //                        }
+        //                    }
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                }
+        //            }
+        //        }
+        //    }
 
-            return digitalCurrencies;
-        }
+        //    return digitalCurrencies;
+        //}
 
-        /// <summary>
-        /// Импорт исторических данных за 20 лет. 1 запись - 1 день
-        /// </summary>
-        /// <param name="symbol">Валютный символ</param>
-        /// <param name="market">Денежный символ</param>
-        /// <returns></returns>
-        public async Task<IReadOnlyList<IOhlcv>> ImportTimeSeriesDaily(string market, string symbol)
-        {
-            var request = new DigitalCurrencyDailyRequest
-            {
-                Function = "DIGITAL_CURRENCY_DAILY",
-                Datatype = _datatype,
-                Outputsize = _outputsize,
-                Market = market,
-                Symbol = symbol
-            };
-            IReadOnlyList<DigitalCurrency> digitalCurrencies = await ImportTimeSeries(request);
-            IReadOnlyList<Candle> candles = _mapper.Map<List<Candle>>(digitalCurrencies);
-            return candles;
-        }
+        ///// <summary>
+        ///// Импорт исторических данных за 20 лет. 1 запись - 1 день
+        ///// </summary>
+        ///// <param name="symbol">Валютный символ</param>
+        ///// <param name="market">Денежный символ</param>
+        ///// <returns></returns>
+        //public async Task<IReadOnlyList<IOhlcv>> ImportTimeSeriesDaily(string market, string symbol)
+        //{
+        //    var request = new DigitalCurrencyDailyRequest
+        //    {
+        //        Function = "DIGITAL_CURRENCY_DAILY",
+        //        Datatype = _datatype,
+        //        Outputsize = _outputsize,
+        //        Market = market,
+        //        Symbol = symbol
+        //    };
+        //    IReadOnlyList<DigitalCurrency> digitalCurrencies = await ImportTimeSeries(request);
+        //    IReadOnlyList<Candle> candles = _mapper.Map<List<Candle>>(digitalCurrencies);
+        //    return candles;
+        //}
 
         /// <summary>
         /// Считать строку курса пары
@@ -155,7 +154,6 @@ namespace ES.DataImport.StockExchangeGateways
                 Volume = volume,
                 MarketCapUSD = marketCapUSD
             };
-
         }
     }
 }
