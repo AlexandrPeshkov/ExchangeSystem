@@ -1,10 +1,14 @@
-﻿using ES.Domain.Interfaces.Requests;
+﻿using ES.Domain.Extensions.Attributes;
+using ES.Domain.Interfaces.Requests;
 
 namespace ES.DataImport.Requests.CryptoCompare
 {
     public class BaseCryptoCompareRequest : IExchangeRequest
     {
-        public string Api_Key { get; set; }
+        [QueryParam("api_key")]
+        public string ApiKey { get; set; }
+
+        [QueryParam("extraParams")]
         public string ExtraParams { get; set; }
     }
 }

@@ -49,7 +49,7 @@ namespace ES.DataImport.StockExchangeGateways
         {
             return new BaseCryptoCompareRequest
             {
-                Api_Key = _keys?.CryptoCompare,
+                ApiKey = _keys?.CryptoCompare,
                 ExtraParams = HttpConstants.CryptoCompareAppName
             };
         }
@@ -72,14 +72,15 @@ namespace ES.DataImport.StockExchangeGateways
             return response;
         }
 
-        public async Task<List<CandleDTO>> MinuteCandle(string fromSymbol, string toSymbol, string exchange, long? beforeTimestamp = null)
+        public async Task<List<CandleDTO>> MinuteCandle(string fromSymbol, string toSymbol, string exchange, long? beforeTimestamp = null, int limit = 2000)
         {
             MinuteCandleRequest request = new MinuteCandleRequest(_defaultRequest)
             {
-                fsym = fromSymbol,
-                tsym = toSymbol,
-                E = exchange,
-                ToTs = beforeTimestamp ?? DateTime.Now.ToUnixTimeStamp()
+                FromSymbol = fromSymbol,
+                ToSymbol = toSymbol,
+                Exchange = exchange,
+                ToTimeStamp = beforeTimestamp ?? DateTime.Now.ToUnixTimeStamp(),
+                Limit = limit
             };
             var response = await _minuteCandleUseCase.Execute(request, _uriBuilder);
             return response;

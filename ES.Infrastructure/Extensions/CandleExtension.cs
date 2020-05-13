@@ -4,7 +4,7 @@ using System.Linq;
 using ES.Domain.Interfaces;
 using ES.Domain.Models;
 using ES.Domain.Period;
-using ES.Infrastructure.Exception;
+using ES.Infrastructure.Exceptions;
 
 namespace ES.Infrastructure.Extensions
 {

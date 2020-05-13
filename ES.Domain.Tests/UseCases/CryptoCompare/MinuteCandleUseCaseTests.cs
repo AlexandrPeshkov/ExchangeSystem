@@ -25,21 +25,21 @@ namespace ES.Domain.Tests.UseCases.CryptoCompare
         {
             var request = new MinuteCandleRequest
             {
-                Api_Key = _keys.CryptoCompare,
+                ApiKey = _keys.CryptoCompare,
                 ExtraParams = HttpConstants.CryptoCompareAppName,
                 TryConversion = false,
-                fsym = from,
-                tsym = to,
-                E = exchange,
+                FromSymbol = from,
+                ToSymbol = to,
+                Exchange = exchange,
                 //Aggregate = 1,
                 Limit = 2000,
-                ToTs = DateTime.Now.ToUnixTimeStamp(),
+                ToTimeStamp = DateTime.Now.ToUnixTimeStamp(),
             };
             var response = await _useCase.Execute(request, _uriBuilder);
 
             Assert.NotNull(response);
             Assert.NotEmpty(response);
-            Assert.True(response.All(c => c.Time <= request.ToTs));
+            Assert.True(response.All(c => c.Time <= request.ToTimeStamp));
         }
     }
 }

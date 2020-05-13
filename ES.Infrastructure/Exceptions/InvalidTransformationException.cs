@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ES.Infrastructure.Exception
+namespace ES.Infrastructure.Exceptions
 {
     public class InvalidTransformationException : System.Exception
     {

@@ -42,9 +42,12 @@ namespace ES.Api
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.PostgreSQL(connectionString, tableName, columnWriters, needAutoCreateTable: true, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
                 .WriteTo.Console()
+                .WriteTo.Seq("http://localhost:5341")
                 //.WriteTo.File($"SerilogLog.txt", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
                 .CreateLogger();
 
+            //Log.Information("Hello, {Name}!", Environment.UserName);
+            //Log.CloseAndFlush();
             CreateHostBuilder(args).Build().Run();
         }
 
