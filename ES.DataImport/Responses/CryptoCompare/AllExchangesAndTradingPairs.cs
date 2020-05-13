@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using static ES.Domain.Responses.CryptoCompare.AllExchangesAndTradingPairs;
+using static ES.DataImport.Responses.CryptoCompare.AllExchangesAndTradingPairs;
 
-namespace ES.Domain.Responses.CryptoCompare
+namespace ES.DataImport.Responses.CryptoCompare
 {
     public class AllExchangesAndTradingPairs : BaseCryptoCompareResponse<ExchangesResponse>
     {

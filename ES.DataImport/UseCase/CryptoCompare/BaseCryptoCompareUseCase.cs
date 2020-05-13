@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Net.Http;
 using System.Threading.Tasks;
-using ES.Domain.Commands;
+using AutoMapper;
+using ES.DataImport.Responses.CryptoCompare;
 using ES.Domain.Configurations;
-using Microsoft.Extensions.Options;
 using ES.Domain.Extensions;
 using ES.Domain.Interfaces.Requests;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using ES.Domain.Responses.CryptoCompare;
-using AutoMapper;
-using ES.Domain.Constants;
 
-namespace ES.Domain.UseCase.CryptoCompare
+namespace ES.DataImport.UseCase.CryptoCompare
 {
-    public abstract class BaseCryptoCompareUseCase<TRequest, TData, TView> : BaseUseCase<TRequest, BaseCryptoCompareResponse<TData>, TView>
+    public abstract class BaseCryptoCompareUseCase<TRequest, TData, TView> : BaseGatewayUseCase<TRequest, BaseCryptoCompareResponse<TData>, TView>
         where TRequest : IExchangeRequest
     {
         public BaseCryptoCompareUseCase(IOptions<StockExchangeKeys> keys, IMapper mapper) : base(keys, mapper)
         {
-            
+
         }
 
         public override async Task<TView> Execute(TRequest request, UriBuilder uriBuilder)

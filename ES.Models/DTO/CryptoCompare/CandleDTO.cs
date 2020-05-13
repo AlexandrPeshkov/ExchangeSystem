@@ -15,5 +15,7 @@ namespace ES.Domain.DTO.CryptoCompare
         public decimal Close { get; set; }
 
         public decimal VolumeFrom { get; set; }
+
+        public decimal VolumeTo { get; set; }
     }
 }

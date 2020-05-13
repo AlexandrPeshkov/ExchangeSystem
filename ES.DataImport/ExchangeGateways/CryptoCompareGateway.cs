@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using ES.DataImport.Requests.CryptoCompare;
+using ES.DataImport.UseCase.CryptoCompare;
 using ES.Domain.Configurations;
 using ES.Domain.Constants;
 using ES.Domain.DTO.CryptoCompare;
 using ES.Domain.Entities;
-using ES.Domain.Requests.CryptoCompare;
+using ES.Domain.Extensions;
 using ES.Domain.UseCase.CryptoCompare;
 using Microsoft.Extensions.Options;
 
@@ -19,6 +22,8 @@ namespace ES.DataImport.StockExchangeGateways
 
         private readonly AllExchangesUseCase _allExchangesUseCase;
 
+        private readonly MinuteCandleUseCase _minuteCandleUseCase;
+
         protected override RequestLimitConfiguration Limits => new RequestLimitConfiguration
         {
             MonthLimit = 100000
@@ -30,12 +35,14 @@ namespace ES.DataImport.StockExchangeGateways
             IOptions<StockExchangeKeys> keys,
             AllCurrenciesUseCase allCoinsUseCase,
             AllExchangesAndPairsUseCase allExchangesAndPairsUseCase,
-            AllExchangesUseCase allExchangesUseCase)
+            AllExchangesUseCase allExchangesUseCase,
+            MinuteCandleUseCase minuteCandleUseCase)
             : base(mapper, keys)
         {
             _allCoinsUseCase = allCoinsUseCase;
             _allExchangePairsUseCase = allExchangesAndPairsUseCase;
             _allExchangesUseCase = allExchangesUseCase;
+            _minuteCandleUseCase = minuteCandleUseCase;
         }
 
         protected override BaseCryptoCompareRequest DefaultRequest()
@@ -49,20 +56,33 @@ namespace ES.DataImport.StockExchangeGateways
 
         public async Task<List<Currency>> ImportAllCurrencies()
         {
-            List<Currency> currencies = await _allCoinsUseCase.Execute(_defaultRequest, _uriBuilder);
-            return currencies;
+            var response = await _allCoinsUseCase.Execute(_defaultRequest, _uriBuilder);
+            return response;
         }
 
         public async Task<List<ExchangePairsDTO>> ImportAllExchangePairs()
         {
-            List<ExchangePairsDTO> exchangePairsDTOs = await _allExchangePairsUseCase.Execute(_defaultRequest, _uriBuilder);
-            return exchangePairsDTOs;
+            var response = await _allExchangePairsUseCase.Execute(_defaultRequest, _uriBuilder);
+            return response;
         }
 
         public async Task<List<ExchangeDTO>> ImportAllExchanges()
         {
-            List<ExchangeDTO> exchanges = await _allExchangesUseCase.Execute(_defaultRequest, _uriBuilder);
-            return exchanges;
+            var response = await _allExchangesUseCase.Execute(_defaultRequest, _uriBuilder);
+            return response;
+        }
+
+        public async Task<List<CandleDTO>> MinuteCandle(string fromSymbol, string toSymbol, string exchange, long? beforeTimestamp = null)
+        {
+            MinuteCandleRequest request = new MinuteCandleRequest(_defaultRequest)
+            {
+                fsym = fromSymbol,
+                tsym = toSymbol,
+                E = exchange,
+                ToTs = beforeTimestamp ?? DateTime.Now.ToUnixTimeStamp()
+            };
+            var response = await _minuteCandleUseCase.Execute(request, _uriBuilder);
+            return response;
         }
     }
 }

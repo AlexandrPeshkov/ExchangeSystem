@@ -1,6 +1,6 @@
 ﻿using ES.Domain.Interfaces.Requests;
 
-namespace ES.Domain.Requests.CryptoCompare
+namespace ES.DataImport.Requests.CryptoCompare
 {
     public class BaseCryptoCompareRequest : IExchangeRequest
     {

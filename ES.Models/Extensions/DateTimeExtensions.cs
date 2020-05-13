@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ES.Infrastructure.Extensions
+namespace ES.Domain.Extensions
 {
     public static class DateTimeExtensions
     {

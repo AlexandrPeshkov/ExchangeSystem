@@ -1,12 +1,15 @@
 ﻿using System;
-using ES.Domain.Interfaces;
 using ES.Domain.Models;
 
 namespace ES.Domain.Entities
 {
-    public class Candle : BaseEntity, IOhlcv
+    public class Candle : BaseEntity
     {
-        public DateTime Time { get; set; }
+        public long TimeOpen { get; set; }
+
+        public long TimeClose { get; set; }
+        
+        public long Interval { get; set; }
 
         public decimal Open { get; set; }
 
@@ -16,6 +19,12 @@ namespace ES.Domain.Entities
 
         public decimal Close { get; set; }
 
-        public decimal Volume { get; set; }
+        public decimal VolumeFrom { get; set; }
+
+        public decimal VolumeTo { get; set; }
+
+        public virtual ExchangePair Pair { get; set; }
+
+        public Guid PairId { get; set; }
     }
 }

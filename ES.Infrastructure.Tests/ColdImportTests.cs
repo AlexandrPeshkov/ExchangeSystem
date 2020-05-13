@@ -150,5 +150,65 @@ namespace ES.Infrastructure.Tests
             Assert.NotNull(pair.CurrencyTo);
             Assert.Equal("DSX", pair.Exchange.Name);
         }
+        
+        [Theory]
+        [InlineData("BTC", "ETH", "DSX")]
+        public async Task ImportAllMinutePairCandles(string from, string to, string exchange)
+        {
+            using (var cntx = Context())
+            {
+                Currency currency = new Currency
+                {
+                    Symbol = from
+                };
+                cntx.Currencies.Add(currency);
+                cntx.SaveChanges();
+            }
+
+            using (var cntx = Context())
+            {
+                Currency currency = new Currency
+                {
+                    Symbol = to
+                };
+                cntx.Currencies.Add(currency);
+                cntx.SaveChanges();
+            }
+
+            using (var cntx = Context())
+            {
+                Exchange ex = new Exchange
+                {
+                    Name = exchange
+                };
+                cntx.Exchanges.Add(ex);
+                cntx.SaveChanges();
+            }
+
+            using (var cntx = Context())
+            {
+                ExchangePair exchangePair = new ExchangePair
+                {
+                    CurrencyFromId = cntx.Currencies.FirstOrDefault(c => c.Symbol == from).Id,
+                    CurrencyToId = cntx.Currencies.FirstOrDefault(c => c.Symbol == to).Id,
+                    ExchangeId = cntx.Exchanges.FirstOrDefault(c => c.Name == exchange).Id,
+                };
+                cntx.Pairs.Add(exchangePair);
+                cntx.SaveChanges();
+            }
+
+            await _coldImportTests.ImportAllMinutePairCandles(from, to, exchange);
+
+            var context = Context();
+            bool isAll60 = await context.Candles.AllAsync(x => x.Interval == 60);
+            bool isAllMatch = await context.Candles
+                .Include(x => x.Pair)
+                .AllAsync(x => x.Pair.CurrencyFrom.Symbol == from
+                && x.Pair.CurrencyFrom.Symbol == to
+                && x.Pair.Exchange.Name == exchange);
+
+            Assert.True(isAll60);
+            Assert.True(isAllMatch);
+        }
     }
 }

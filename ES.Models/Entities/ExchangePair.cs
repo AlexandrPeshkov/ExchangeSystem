@@ -14,8 +14,10 @@ namespace ES.Domain.Entities
 
         public Guid ExchangeId { get; set; }
 
-        public  Currency CurrencyFrom { get; set; }
-        public  Currency CurrencyTo { get; set; }
-        public  Exchange Exchange { get; set; }
+        public virtual Currency CurrencyFrom { get; set; }
+
+        public virtual Currency CurrencyTo { get; set; }
+
+        public virtual Exchange Exchange { get; set; }
     }
 }

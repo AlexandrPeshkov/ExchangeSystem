@@ -40,11 +40,9 @@ namespace ES.Api
             };
 
             Log.Logger = new LoggerConfiguration()
-                //.Enrich.FromLogContext()
-                //.ReadFrom.Configuration(configuration)
                 .WriteTo.PostgreSQL(connectionString, tableName, columnWriters, needAutoCreateTable: true, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
                 .WriteTo.Console()
-                .WriteTo.File($"SerilogLog.txt", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
+                //.WriteTo.File($"SerilogLog.txt", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
                 .CreateLogger();
 
             CreateHostBuilder(args).Build().Run();
@@ -55,6 +53,6 @@ namespace ES.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                }).UseSerilog();
+                }).UseSerilog(Log.Logger);
     }
 }

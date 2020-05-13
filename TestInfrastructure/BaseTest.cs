@@ -3,7 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using AutoMapper;
+using ES.Api;
 using ES.DataImport.StockExchangeGateways;
+using ES.DataImport.UseCase;
 using ES.Domain;
 using ES.Domain.Configurations;
 using ES.Domain.Interfaces.UseCases;
@@ -65,7 +67,7 @@ namespace TestInfrastructure
 
         private void AddUseCases(IServiceCollection services)
         {
-            var assembly = Assembly.GetAssembly(typeof(IUseCase<,,>))
+            var assembly = Assembly.GetAssembly(typeof(BaseGatewayUseCase<,,>))
                 .GetTypes()
                 .Where(t => t.IsGenericType == false && t.GetInterfaces().FirstOrDefault(i => i?.Name == typeof(IUseCase<,,>)?.Name) != null);
 

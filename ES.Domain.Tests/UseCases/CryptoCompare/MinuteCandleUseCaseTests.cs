@@ -1,31 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ES.DataImport.Requests.CryptoCompare;
 using ES.Domain.Constants;
-using ES.Domain.Entities;
-using ES.Domain.Requests.CryptoCompare;
+using ES.Domain.Extensions;
 using ES.Domain.UseCase.CryptoCompare;
-using ES.Infrastructure.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace ES.Domain.Tests.UseCases.CryptoCompare
 {
-    public class MinutePairOHLCVUseCaseTests : BaseCryptoCompareUseCaseTest
+    public class MinuteCandleUseCaseTests : BaseCryptoCompareUseCaseTest
     {
-        private readonly MinutePairOHLCVUseCase _useCase;
+        private readonly MinuteCandleUseCase _useCase;
 
-        public MinutePairOHLCVUseCaseTests()
+        public MinuteCandleUseCaseTests()
         {
-            _useCase = _services.GetService<MinutePairOHLCVUseCase>();
+            _useCase = _services.GetService<MinuteCandleUseCase>();
         }
 
         [Theory]
         [InlineData("BTC", "ETH", "DSX")]
-        public async Task Load10MinuteDataset(string from, string to, string exchange)
+        public async Task LoadMinuteDataset(string from, string to, string exchange)
         {
-            var request = new MinutePairOHLCVRequest
+            var request = new MinuteCandleRequest
             {
                 Api_Key = _keys.CryptoCompare,
                 ExtraParams = HttpConstants.CryptoCompareAppName,
@@ -37,11 +35,11 @@ namespace ES.Domain.Tests.UseCases.CryptoCompare
                 Limit = 2000,
                 ToTs = DateTime.Now.ToUnixTimeStamp(),
             };
-            List<Candle> response = await _useCase.Execute(request, _uriBuilder);
+            var response = await _useCase.Execute(request, _uriBuilder);
 
             Assert.NotNull(response);
             Assert.NotEmpty(response);
-            Assert.True(response.All(c => c.Time.ToUnixTimeStamp() <= request.ToTs));
+            Assert.True(response.All(c => c.Time <= request.ToTs));
         }
     }
 }

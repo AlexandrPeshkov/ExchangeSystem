@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
 using AutoMapper;
 using CsvHelper.Configuration;
+using ES.DataImport.Requests;
 using ES.Domain.Configurations;
-using ES.Domain.Requests;
 using Microsoft.Extensions.Options;
 
 namespace ES.DataImport.StockExchangeGateways

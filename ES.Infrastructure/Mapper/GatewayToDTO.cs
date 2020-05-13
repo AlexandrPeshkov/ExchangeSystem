@@ -1,8 +1,6 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using ES.Domain.DTO.CryptoCompare;
 using ES.Domain.Entities;
-using ES.Infrastructure.Extensions;
 
 namespace ES.Infrastructure.Mapper
 {
@@ -12,8 +10,8 @@ namespace ES.Infrastructure.Mapper
         {
             CreateMap<CurrencyDTO, Currency>();
             CreateMap<CandleDTO, Candle>()
-                .ForMember(d => d.Volume, d => d.MapFrom(s => s.VolumeFrom))
-                .ForMember(d => d.Time, d => d.MapFrom(s => s.Time.UnixTimeStampToDateTime()));
+                .ForMember(d => d.TimeOpen, d => d.MapFrom(s => s.Time));
+
             CreateMap<ExchangeDTO, Exchange>()
                 .ForMember(d => d.WebSite, d => d.MapFrom(s => s.AffiliateURL));
         }

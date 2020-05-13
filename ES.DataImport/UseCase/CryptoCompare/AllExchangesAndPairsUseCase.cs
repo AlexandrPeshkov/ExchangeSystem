@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
+using ES.DataImport.Requests.CryptoCompare;
+using ES.DataImport.Responses.CryptoCompare;
 using ES.Domain.Configurations;
 using ES.Domain.DTO.CryptoCompare;
-using ES.Domain.Requests.CryptoCompare;
-using ES.Domain.Responses.CryptoCompare;
 using Microsoft.Extensions.Options;
-using static ES.Domain.Responses.CryptoCompare.AllExchangesAndTradingPairs;
+using static ES.DataImport.Responses.CryptoCompare.AllExchangesAndTradingPairs;
 
-namespace ES.Domain.UseCase.CryptoCompare
+namespace ES.DataImport.UseCase.CryptoCompare
 {
     public class AllExchangesAndPairsUseCase : BaseCryptoCompareUseCase<BaseCryptoCompareRequest, ExchangesResponse, List<ExchangePairsDTO>>
     {

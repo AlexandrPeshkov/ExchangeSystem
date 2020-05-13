@@ -8,6 +8,7 @@ namespace ES.Domain
         public DbSet<Exchange> Exchanges { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<ExchangePair> Pairs { get; set; }
+        public DbSet<Candle> Candles { get; set; }
 
         public CoreDBContext(DbContextOptions<CoreDBContext> options)
          : base(options)
@@ -20,6 +21,7 @@ namespace ES.Domain
             modelBuilder.Entity<Exchange>(e =>
             {
                 e.HasMany(x => x.Pairs).WithOne(x => x.Exchange).HasForeignKey(x => x.ExchangeId);
+
                 e.HasAlternateKey(e => e.Name);
             });
 
@@ -27,12 +29,18 @@ namespace ES.Domain
             {
                 e.HasMany<ExchangePair>().WithOne(x => x.CurrencyTo).HasForeignKey(x => x.CurrencyToId);
                 e.HasMany<ExchangePair>().WithOne(x => x.CurrencyFrom).HasForeignKey(x => x.CurrencyFromId);
+
                 e.HasAlternateKey(e => e.Symbol);
             });
 
             modelBuilder.Entity<ExchangePair>(e =>
             {
                 e.ToTable(nameof(Pairs));
+            });
+
+            modelBuilder.Entity<Candle>(e =>
+            {
+                e.HasMany<Candle>().WithOne().HasForeignKey(x => x.PairId);
             });
 
         }

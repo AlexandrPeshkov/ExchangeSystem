@@ -1,11 +1,16 @@
-﻿namespace ES.Domain.Requests.CryptoCompare
+﻿namespace ES.DataImport.Requests.CryptoCompare
 {
-    public class MinutePairOHLCVRequest : BaseCryptoCompareRequest
+    public class MinuteCandleRequest : BaseCryptoCompareRequest
     {
         /// <summary>
         /// Преобразование 
         /// </summary>
-        public bool TryConversion { get; set; }
+        public bool TryConversion { get; set; } = false;
+
+        /// <summary>
+        /// Лимит (max 2000)
+        /// </summary>
+        public int Limit { get; set; } = 2000;
 
         /// <summary>
         /// From символ
@@ -22,19 +27,15 @@
         /// </summary>
         public string E { get; set; }
 
-        ///// <summary>
-        ///// Мин - 1
-        ///// </summary>
-        //public int Aggregate { get; set; }
-
-        /// <summary>
-        /// Лимит (max 2000)
-        /// </summary>
-        public int Limit { get; set; }
-
         /// <summary>
         /// Timestamp до
         /// </summary>
         public long ToTs { get; set; }
+
+        public MinuteCandleRequest(BaseCryptoCompareRequest baseRequest = null)
+        {
+            Api_Key = baseRequest?.Api_Key;
+            ExtraParams = baseRequest?.ExtraParams;
+        }
     }
 }

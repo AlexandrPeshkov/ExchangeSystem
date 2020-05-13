@@ -1,4 +1,4 @@
-﻿namespace ES.Domain.Responses.CryptoCompare
+﻿namespace ES.DataImport.Responses.CryptoCompare
 {
     public class BaseCryptoCompareResponse<TData>
     {

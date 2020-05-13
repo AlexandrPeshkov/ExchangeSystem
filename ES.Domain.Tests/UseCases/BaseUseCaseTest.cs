@@ -1,9 +1,9 @@
 ﻿using System;
+using ES.DataImport.Requests;
 using ES.Domain.Configurations;
-using ES.Domain.Requests;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using TestInfrastructure;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace ES.Domain.Tests.UseCases
 {

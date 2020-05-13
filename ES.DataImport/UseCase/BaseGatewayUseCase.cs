@@ -4,14 +4,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using ES.Domain.Configurations;
-using ES.Domain.Extensions;
 using ES.Domain.Interfaces.Requests;
 using ES.Domain.Interfaces.UseCases;
 using Microsoft.Extensions.Options;
 
-namespace ES.Domain.Commands
+namespace ES.DataImport.UseCase
 {
-    public abstract class BaseUseCase<TRequest, TResponse, TView> : IUseCase<TRequest, TResponse, TView>
+    public abstract class BaseGatewayUseCase<TRequest, TResponse, TView> : IUseCase<TRequest, TResponse, TView>
         where TResponse : class
         where TRequest : IExchangeRequest
     {
@@ -23,7 +22,7 @@ namespace ES.Domain.Commands
 
         protected abstract string UriPath { get; }
 
-        public BaseUseCase(IOptions<StockExchangeKeys> keys, IMapper mapper)
+        public BaseGatewayUseCase(IOptions<StockExchangeKeys> keys, IMapper mapper)
         {
             _keys = keys?.Value;
             _mapper = mapper;

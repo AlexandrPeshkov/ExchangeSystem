@@ -23,6 +23,6 @@ namespace ES.Domain.Entities
 
         public decimal? BlockReward { get; set; }
 
-        public string? SmartContractAddress { get; set; }
+        public string SmartContractAddress { get; set; }
     }
 }
