@@ -33,7 +33,7 @@ namespace ES.Analysis.Infrastructure
             _mappedInputs = inputs.Select(inputMapper).ToList();
             if (_isTInputIOhlcvData)
             {
-                _mappedDateTimes = inputs.Cast<IOhlcv>().Select(c => c.DateTime).ToList();
+                _mappedDateTimes = inputs.Cast<IOhlcv>().Select(c => c.Time).ToList();
             }
 
             Cache = new Dictionary<int, TOutputToMap>();

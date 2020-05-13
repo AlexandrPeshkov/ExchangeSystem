@@ -95,7 +95,7 @@ namespace Trady.Test
             var result = candles.StochRsi(14)[candles.Count() - 1];
             Assert.IsTrue(0m.IsApproximatelyEquals(result.Tick.Value));
 
-            var result2 = candles.StochRsi(14).Single(v => v.DateTime == new DateTime(2017, 9, 15));
+            var result2 = candles.StochRsi(14).Single(v => v.Time == new DateTime(2017, 9, 15));
             Assert.IsTrue(0.317m.IsApproximatelyEquals(result2.Tick.Value));
         }
 
@@ -160,7 +160,7 @@ namespace Trady.Test
             var results = candles.Sar(0.02m, 0.2m);
             Assert.IsTrue(173.93m.IsApproximatelyEquals(results[candles.Count() - 1].Tick.Value));
             Assert.IsTrue(169.92m.IsApproximatelyEquals(results[candles.Count() - 3].Tick.Value));
-            Assert.IsTrue(157.36m.IsApproximatelyEquals(results.First(r => r.DateTime == new DateTime(2017, 7, 24)).Tick.Value));
+            Assert.IsTrue(157.36m.IsApproximatelyEquals(results.First(r => r.Time == new DateTime(2017, 7, 24)).Tick.Value));
         }
 
         [TestMethod]
@@ -591,7 +591,7 @@ namespace Trady.Test
         public async Task TestVwap_IsAccurateAsync()
         {
             var candles = await ImportIOhlcvDatasAsync("NFLX_5m_1_27_2019.csv");
-            var selected = candles.Where(x => x.DateTime <= new DateTimeOffset(2019, 1, 25, 15, 15, 00, new TimeSpan(-6, 0, 0)));
+            var selected = candles.Where(x => x.Time <= new DateTimeOffset(2019, 1, 25, 15, 15, 00, new TimeSpan(-6, 0, 0)));
             var result = selected.Vwap()[selected.Count() - 1].Tick;
             Assert.IsTrue(335.67m.IsApproximatelyEquals(result.Value));
         }
@@ -600,7 +600,7 @@ namespace Trady.Test
         public async Task TestVwap_CloseIsAboveVwapAsync()
         {
             var candles = await ImportIOhlcvDatasAsync("NFLX_5m_1_27_2019.csv");
-            var selected = candles.Where(x => x.DateTime <= new DateTimeOffset(2019, 1, 25, 09, 40, 00, new TimeSpan(-6, 0, 0)));
+            var selected = candles.Where(x => x.Time <= new DateTimeOffset(2019, 1, 25, 09, 40, 00, new TimeSpan(-6, 0, 0)));
             var result = selected.Vwap()[selected.Count() - 1].Tick;
             var close = selected.Last().Close;
             Assert.IsTrue(330.32m.IsApproximatelyEquals(result.Value));
@@ -611,7 +611,7 @@ namespace Trady.Test
         public async Task TestVwap_CloseIsBelowVwapAsync()
         {
             var candles = await ImportIOhlcvDatasAsync("NFLX_5m_1_27_2019.csv");
-            var selected = candles.Where(x => x.DateTime <= new DateTimeOffset(2019, 1, 25, 09, 30, 00, new TimeSpan(-6, 0, 0)));
+            var selected = candles.Where(x => x.Time <= new DateTimeOffset(2019, 1, 25, 09, 30, 00, new TimeSpan(-6, 0, 0)));
             var result = selected.Vwap()[selected.Count() - 1].Tick;
             var close = selected.Last().Close;
             Assert.IsTrue(329.68m.IsApproximatelyEquals(result.Value));

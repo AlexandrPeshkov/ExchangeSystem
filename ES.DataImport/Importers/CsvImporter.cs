@@ -67,7 +67,7 @@ namespace ES.DataImporter.Csv
                         if ((!startTime.HasValue || date >= startTime) && (!endTime.HasValue || date <= endTime))
                             candles.Add(GetRecord(csvReader));
                     }
-                    return candles.OrderBy(c => c.DateTime).ToList();
+                    return candles.OrderBy(c => c.Time).ToList();
                 }
             }, token);
 

@@ -5,7 +5,7 @@ namespace ES.Analysis
 {
     public class Analysis<T> : IAnalysis<T>
     {
-        public DateTime DateTime { get; }
+        public DateTime Time { get; }
 
         public T Tick { get; }
 
@@ -14,7 +14,7 @@ namespace ES.Analysis
         public Analysis(DateTime dateTime, T tick)
         {
             Tick = tick;
-            DateTime = dateTime;
+            Time = dateTime;
         }
     }
 }

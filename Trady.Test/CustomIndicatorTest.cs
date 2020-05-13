@@ -27,9 +27,9 @@ namespace Trady.Test
 
             var customIndicator = new ClosePricePercentageChangeSinceMondayOpen(candles);
 
-            Assert.AreEqual(candles.ElementAt(10).DateTime.Date, new DateTime(2012, 6, 4));
+            Assert.AreEqual(candles.ElementAt(10).Time.Date, new DateTime(2012, 6, 4));
             // 4th June 2012 is Monday. Week opens at 27.2
-            Assert.AreEqual(candles.ElementAt(10).DateTime.DayOfWeek, DayOfWeek.Monday);
+            Assert.AreEqual(candles.ElementAt(10).Time.DayOfWeek, DayOfWeek.Monday);
 
             // That Monday FB closed at: 26.9.
             Assert.IsTrue(customIndicator[10].Tick.Value.IsApproximatelyEquals(-1.10294m));
@@ -61,8 +61,8 @@ namespace Trady.Test
             protected override decimal? ComputeByIndexImpl(IReadOnlyList<IOhlcv> mappedInputs, int index)
             {
                 var currentIOhlcvData = mappedInputs[index];
-                var mondayOfThatWeek = GetMondayFor(currentIOhlcvData.DateTime);
-                var candleForThatMonday = mappedInputs.FirstOrDefault(c => c.DateTime.Date.Equals(mondayOfThatWeek));
+                var mondayOfThatWeek = GetMondayFor(currentIOhlcvData.Time);
+                var candleForThatMonday = mappedInputs.FirstOrDefault(c => c.Time.Date.Equals(mondayOfThatWeek));
 
                 if (candleForThatMonday == null)
                 {

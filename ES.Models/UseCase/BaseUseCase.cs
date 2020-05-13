@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using ES.Domain.Configurations;
+using ES.Domain.Extensions;
 using ES.Domain.Interfaces.Requests;
 using ES.Domain.Interfaces.UseCases;
 using Microsoft.Extensions.Options;
@@ -33,6 +34,7 @@ namespace ES.Domain.Commands
             TView response = default;
             _httpClient = new HttpClient
             {
+                //BaseAddress = new Uri($"{u}{uriBuilder.Host}")
                 BaseAddress = uriBuilder.Uri
             };
             AddApiKey(ref _httpClient, uriBuilder);
@@ -40,7 +42,7 @@ namespace ES.Domain.Commands
             return Task.FromResult(response);
         }
 
-        protected abstract HttpClient AddApiKey(ref HttpClient httpClient, UriBuilder uriBuilder);
+        protected virtual HttpClient AddApiKey(ref HttpClient httpClient, UriBuilder uriBuilder) => httpClient;
 
         protected virtual void AddPath(string path, UriBuilder uriBuilder)
         {
@@ -61,7 +63,6 @@ namespace ES.Domain.Commands
 
         protected async Task<string> ReadJsonBackup(string gatewayName, string requestName)
         {
-            var a = AppContext.BaseDirectory;
             var jsonBackupPath = $"../../../../SourceData/{gatewayName}/{requestName}.json";
             var json = string.Empty;
             if (File.Exists(jsonBackupPath))

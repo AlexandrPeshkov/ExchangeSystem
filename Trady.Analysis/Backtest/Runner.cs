@@ -56,8 +56,8 @@ namespace ES.Analysis.Backtest
             for (int i = 0; i < _weightings.Count; i++)
             {
                 var asset = assetCashMap.ElementAt(i).Key;
-                var startIndex = asset.FindIndexOrDefault(c => c.DateTime >= (startTime ?? DateTimeOffset.MinValue), 0).Value;
-                var endIndex = asset.FindLastIndexOrDefault(c => c.DateTime <= (endTime ?? DateTimeOffset.MaxValue), asset.Count() - 1).Value;
+                var startIndex = asset.FindIndexOrDefault(c => c.Time >= (startTime ?? DateTimeOffset.MinValue), 0).Value;
+                var endIndex = asset.FindLastIndexOrDefault(c => c.Time <= (endTime ?? DateTimeOffset.MaxValue), asset.Count() - 1).Value;
                 using (var context = new AnalyzeContext(asset))
                 {
                     var executor = CreateBuySellRuleExecutor(context, _calculator, assetCashMap, transactions);
@@ -108,7 +108,7 @@ namespace ES.Analysis.Backtest
                 assetCashMap[nextCandle.BackingList] -= transaction.AbsoluteCashFlow; //cash to buy asset
 
                 transactions.Add(transaction);
-                OnBought?.Invoke(indexedCandle.BackingList, nextCandle.Index, nextCandle.DateTime, nextCandle.Open, transaction.Quantity, transaction.AbsoluteCashFlow, assetCashMap[indexedCandle.BackingList]);
+                OnBought?.Invoke(indexedCandle.BackingList, nextCandle.Index, nextCandle.Time, nextCandle.Open, transaction.Quantity, transaction.AbsoluteCashFlow, assetCashMap[indexedCandle.BackingList]);
             }
         }
 
@@ -127,7 +127,7 @@ namespace ES.Analysis.Backtest
                 decimal profitLossRatio = (transaction.AbsoluteCashFlow - lastTransaction.AbsoluteCashFlow) / lastTransaction.AbsoluteCashFlow;
 
                 transactions.Add(transaction);
-                OnSold?.Invoke(indexedCandle.BackingList, nextCandle.Index, nextCandle.DateTime, nextCandle.Open, transaction.Quantity, transaction.AbsoluteCashFlow, assetCashMap[indexedCandle.BackingList], profitLossRatio);
+                OnSold?.Invoke(indexedCandle.BackingList, nextCandle.Index, nextCandle.Time, nextCandle.Open, transaction.Quantity, transaction.AbsoluteCashFlow, assetCashMap[indexedCandle.BackingList], profitLossRatio);
             }
         }
     }

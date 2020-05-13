@@ -40,7 +40,7 @@ namespace ES.DataImporter.Quandl
                 throw new ArgumentException("This importer only supports daily, weekly & monthly data");
 
             var response = await _client.Timeseries.GetDataAsync(_databaseCode, symbol, startDate: startTime, endDate: endTime, token: token, collapse: PeriodMap[period]).ConfigureAwait(false);
-            return response.DatasetData.Data.Where(r => !r.IsNullOrWhitespace()).Select(r => r.CreateIOhlcvData()).OrderBy(c => c.DateTime).ToList();
+            return response.DatasetData.Data.Where(r => !r.IsNullOrWhitespace()).Select(r => r.CreateIOhlcvData()).OrderBy(c => c.Time).ToList();
         }
     }
 

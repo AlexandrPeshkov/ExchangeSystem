@@ -20,15 +20,15 @@ namespace ES.Infrastructure.Extensions
             var periodInstance = Activator.CreateInstance<TTargetPeriod>();
 
             // To prevent lazy evaluated when compute
-            var orderedTrades = trades.OrderBy(c => c.DateTime).ToList();
+            var orderedTrades = trades.OrderBy(c => c.Time).ToList();
 
-            var periodStartTime = orderedTrades[0].DateTime;
+            var periodStartTime = orderedTrades[0].Time;
             var periodEndTime = periodInstance.NextTimestamp(periodStartTime);
 
             var tempTrades = new List<ITickTrade>();
             for (int i = 0; i < orderedTrades.Count; i++)
             {
-                var indexTime = orderedTrades[i].DateTime;
+                var indexTime = orderedTrades[i].Time;
                 if (indexTime >= periodEndTime)
                 {
                     periodStartTime = periodEndTime;
@@ -56,7 +56,7 @@ namespace ES.Infrastructure.Extensions
             if (!trades.Any())
                 return null;
 
-            var dateTime = trades.First().DateTime;
+            var dateTime = trades.First().Time;
             var open = trades.First().Price;
             var high = trades.Max(trade => trade.Price);
             var low = trades.Min(trade => trade.Price);

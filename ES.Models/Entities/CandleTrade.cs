@@ -7,7 +7,7 @@ namespace ES.Domain.Models
     {
         public CandleTrade(DateTime dateTime, decimal open, decimal high, decimal low, decimal close, decimal volume)
         {
-            DateTime = dateTime;
+            Time = dateTime;
             Open = open;
             High = high;
             Low = low;
@@ -15,7 +15,7 @@ namespace ES.Domain.Models
             Volume = volume;
         }
 
-        public DateTime DateTime { get; set; }
+        public DateTime Time { get; set; }
 
         public decimal Open { get; set; }
 
@@ -26,5 +26,6 @@ namespace ES.Domain.Models
         public decimal Close { get; set; }
 
         public decimal Volume { get; set; }
+        public decimal VolumeTo { get; set; }
     }
 }

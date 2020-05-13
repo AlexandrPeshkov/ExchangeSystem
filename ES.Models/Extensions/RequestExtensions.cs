@@ -17,7 +17,7 @@ namespace ES.Domain.Extensions
                              where p.GetValue(request, null) != null
                              select p.Name + "=" + HttpUtility.UrlEncode(p.GetValue(request, null).ToString());
 
-            var url = string.Join("&", properties.ToArray());
+            var url = string.Join("&", properties.ToArray()); //.ToLower();
             return url;
         }
     }

@@ -44,7 +44,7 @@ namespace ES.DataImporter.Yahoo
             var corrEndTime = (endTime > UnixMaxDateTime ? UnixMaxDateTime : endTime) ?? UnixMaxDateTime;
             var candles = await YahooFinanceApi.Yahoo.GetHistoricalAsync(symbol, corrStartTime, corrEndTime, PeriodMap[period], token);
 
-            return candles.Select(c => new ES.Domain.Models.CandleTrade(c.DateTime, c.Open, c.High, c.Low, c.Close, c.Volume)).OrderBy(c => c.DateTime).ToList();
+            return candles.Select(c => new ES.Domain.Models.CandleTrade(c.DateTime, c.Open, c.High, c.Low, c.Close, c.Volume)).OrderBy(c => c.Time).ToList();
         }
     }
 }

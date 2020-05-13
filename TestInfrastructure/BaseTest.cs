@@ -31,16 +31,18 @@ namespace TestInfrastructure
         private ServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
-            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
 
+            var apiPath = $"{AppContext.BaseDirectory}../../../../ES.Api";
             IConfigurationRoot _configurationRoot = new ConfigurationBuilder()
-               .SetBasePath(Directory.GetCurrentDirectory())
+               //.SetBasePath(Directory.GetCurrentDirectory())
+               .SetBasePath(apiPath)
                .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
                .AddEnvironmentVariables()
                .Build();
 
             _options = new DbContextOptionsBuilder<CoreDBContext>()
-                .UseInMemoryDatabase(databaseName: "Test")
+                .UseInMemoryDatabase(databaseName: "TestDB")
                 .Options;
 
             var section = _configurationRoot?.GetSection(nameof(StockExchangeKeys));

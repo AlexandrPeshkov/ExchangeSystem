@@ -41,7 +41,7 @@ namespace Trady.Test
         public async Task TestBacktestAsync()
         {
             var fullIOhlcvDatas = await ImportIOhlcvDatasAsync();
-            var candles = fullIOhlcvDatas.Where(c => c.DateTime < new DateTime(2013, 1, 1)).ToList();
+            var candles = fullIOhlcvDatas.Where(c => c.Time < new DateTime(2013, 1, 1)).ToList();
 
             var buyRule = Rule.Create(ic => ic.IsMacdBullishCross(12, 26, 9));
             var sellRule = Rule.Create(ic => ic.IsMacdBearishCross(12, 26, 9));
@@ -78,7 +78,7 @@ namespace Trady.Test
         public async Task TestBacktestWithPartialBaseCurrenciesAsync()
         {
             var fullIOhlcvDatas = await ImportIOhlcvDatasAsync();
-            var candles = fullIOhlcvDatas.Where(c => c.DateTime < new DateTime(2013, 1, 1)).ToList();
+            var candles = fullIOhlcvDatas.Where(c => c.Time < new DateTime(2013, 1, 1)).ToList();
 
             var buyRule = Rule.Create(ic => ic.IsMacdBullishCross(12, 26, 9));
             var sellRule = Rule.Create(ic => ic.IsMacdBearishCross(12, 26, 9));
@@ -116,7 +116,7 @@ namespace Trady.Test
         public async Task TestBacktestWithFeesAsync()
         {
             var fullIOhlcvDatas = await ImportIOhlcvDatasAsync();
-            var candles = fullIOhlcvDatas.Where(c => c.DateTime < new DateTime(2013, 1, 1)).ToList();
+            var candles = fullIOhlcvDatas.Where(c => c.Time < new DateTime(2013, 1, 1)).ToList();
 
             var buyRule = Rule.Create(ic => ic.IsMacdBullishCross(12, 26, 9));
             var sellRule = Rule.Create(ic => ic.IsMacdBearishCross(12, 26, 9));

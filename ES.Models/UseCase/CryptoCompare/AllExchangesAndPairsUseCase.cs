@@ -2,14 +2,14 @@
 using AutoMapper;
 using ES.Domain.Configurations;
 using ES.Domain.DTO.CryptoCompare;
-using ES.Domain.Requests;
+using ES.Domain.Requests.CryptoCompare;
 using ES.Domain.Responses.CryptoCompare;
 using Microsoft.Extensions.Options;
 using static ES.Domain.Responses.CryptoCompare.AllExchangesAndTradingPairs;
 
 namespace ES.Domain.UseCase.CryptoCompare
 {
-    public class AllExchangesAndPairsUseCase : BaseCryptoCompareUseCase<EmptyRequest, ExchangesResponse, List<ExchangePairsDTO>>
+    public class AllExchangesAndPairsUseCase : BaseCryptoCompareUseCase<BaseCryptoCompareRequest, ExchangesResponse, List<ExchangePairsDTO>>
     {
         protected override string UriPath => "data/v4/all/exchanges";
 

@@ -114,7 +114,7 @@ namespace ES.DataImporter.AlphaVantage
                 }
             }
 
-            return candles.OrderBy(c => c.DateTime).ToList();
+            return candles.OrderBy(c => c.Time).ToList();
         }
 
         public IOhlcv GetRecord(CsvReader csv, string format, CultureInfo culture)

@@ -13,7 +13,7 @@ namespace ES.Analysis
         private IAnalyzeContext _context;
 
         protected IndexedCandleBase(IEnumerable<IOhlcv> candles, int index)
-            : base(candles.ElementAt(index).DateTime,
+            : base(candles.ElementAt(index).Time,
                    candles.ElementAt(index).Open,
                    candles.ElementAt(index).High,
                    candles.ElementAt(index).Low,

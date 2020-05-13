@@ -3,13 +3,13 @@ using System.Linq;
 using AutoMapper;
 using ES.Domain.Configurations;
 using ES.Domain.DTO.CryptoCompare;
-using ES.Domain.Requests;
+using ES.Domain.Requests.CryptoCompare;
 using ES.Domain.Responses.CryptoCompare;
 using Microsoft.Extensions.Options;
 
 namespace ES.Domain.UseCase.CryptoCompare
 {
-    public class AllExchangesUseCase : BaseCryptoCompareUseCase<EmptyRequest, Dictionary<string, ExchangeDTO>, List<ExchangeDTO>>
+    public class AllExchangesUseCase : BaseCryptoCompareUseCase<BaseCryptoCompareRequest, Dictionary<string, ExchangeDTO>, List<ExchangeDTO>>
     {
         protected override string UriPath => "data/exchanges/general";
 

@@ -34,7 +34,7 @@ namespace ES.Infrastructure.Extensions
                 return candles.ToList();
 
             if (!IsTimeframesValid<TSourcePeriod>(candles, out var err))
-                throw new InvalidTimeframeException(err.DateTime);
+                throw new InvalidTimeframeException(err.Time);
 
             if (!IsTransformationValid<TSourcePeriod, TTargetPeriod>())
                 throw new InvalidTransformationException(typeof(TSourcePeriod), typeof(TTargetPeriod));
@@ -43,15 +43,15 @@ namespace ES.Infrastructure.Extensions
             TTargetPeriod periodInstance = Activator.CreateInstance<TTargetPeriod>();
 
             // To prevent lazy evaluated when compute
-            var orderedCandles = candles.OrderBy(c => c.DateTime).ToList();
+            var orderedCandles = candles.OrderBy(c => c.Time).ToList();
 
-            DateTime periodStartTime = orderedCandles[0].DateTime;
+            DateTime periodStartTime = orderedCandles[0].Time;
             DateTime periodEndTime = periodInstance.NextTimestamp(periodStartTime);
 
             var tempCandles = new List<IOhlcv>();
             for (int i = 0; i < orderedCandles.Count; i++)
             {
-                var indexTime = orderedCandles[i].DateTime;
+                var indexTime = orderedCandles[i].Time;
                 if (indexTime >= periodEndTime)
                 {
                     periodStartTime = periodEndTime;
@@ -82,13 +82,13 @@ namespace ES.Infrastructure.Extensions
         {
             var periodInstance = Activator.CreateInstance<TPeriod>();
             err = default;
-            var offset = candles.Any() ? candles.First().DateTime.Hour : 0;
+            var offset = candles.Any() ? candles.First().Time.Hour : 0;
 
             for (int i = 0; i < candles.Count() - 1; i++)
             {
-                var nextTime = periodInstance.NextTimestamp(candles.ElementAt(i).DateTime);
+                var nextTime = periodInstance.NextTimestamp(candles.ElementAt(i).Time);
                 var candleEndTime = new DateTimeOffset(nextTime.Date, TimeSpan.FromHours(offset));
-                if (candleEndTime > candles.ElementAt(i + 1).DateTime)
+                if (candleEndTime > candles.ElementAt(i + 1).Time)
                 {
                     err = candles.ElementAt(i);
                     return false;
@@ -123,7 +123,7 @@ namespace ES.Infrastructure.Extensions
             if (!candles.Any())
                 return null;
 
-            var dateTime = candles.First().DateTime;
+            var dateTime = candles.First().Time;
             var open = candles.First().Open;
             var high = candles.Max(stick => stick.High);
             var low = candles.Min(stick => stick.Low);

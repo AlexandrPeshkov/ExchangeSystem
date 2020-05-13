@@ -18,11 +18,13 @@ namespace ES.Domain.UseCase.CryptoCompare
     {
         public BaseCryptoCompareUseCase(IOptions<StockExchangeKeys> keys, IMapper mapper) : base(keys, mapper)
         {
+            
         }
 
         public override async Task<TView> Execute(TRequest request, UriBuilder uriBuilder)
         {
             TView view = await base.Execute(request, uriBuilder);
+
             uriBuilder.Query = request?.ToQuery();
 
             var response = await _httpClient.GetAsync(uriBuilder.Uri);
@@ -53,12 +55,6 @@ namespace ES.Domain.UseCase.CryptoCompare
                 view = _mapper.Map<TView>(result.Data);
             }
             return view;
-        }
-
-        protected override HttpClient AddApiKey(ref HttpClient httpClient, UriBuilder uriBuilder)
-        {
-            uriBuilder.Query = $"apikey={_keys.CryptoCompare}extraParams={HttpConstants.CryptoCompareAppName}";
-            return httpClient;
         }
     }
 }

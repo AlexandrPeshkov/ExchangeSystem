@@ -51,7 +51,7 @@ namespace ES.Analysis.Backtest.FeeCalculators
             quantity -= FlatExchangeFee * quantity;
             //var quoteCurrencyFee = _flatExchangeFee * nextCandle.Open;
 
-            return new Transaction(indexedCandle.BackingList, nextCandle.Index, nextCandle.DateTime, TransactionType.Buy, quantity, cashToBuyAsset, costs);
+            return new Transaction(indexedCandle.BackingList, nextCandle.Index, nextCandle.Time, TransactionType.Buy, quantity, cashToBuyAsset, costs);
         }
 
 
@@ -74,7 +74,7 @@ namespace ES.Analysis.Backtest.FeeCalculators
 
             cashWhenSellAsset -= FlatExchangeFee * cashWhenSellAsset;
 
-            return new Transaction(indexedCandle.BackingList, nextCandle.Index, nextCandle.DateTime, TransactionType.Sell, quantity, cashWhenSellAsset, costs);
+            return new Transaction(indexedCandle.BackingList, nextCandle.Index, nextCandle.Time, TransactionType.Sell, quantity, cashWhenSellAsset, costs);
         }
 
         private void ValidateProperties()

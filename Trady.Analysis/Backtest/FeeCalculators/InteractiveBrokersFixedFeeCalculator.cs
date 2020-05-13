@@ -46,7 +46,7 @@ namespace ES.Analysis.Backtest.FeeCalculators
 
             decimal cashToBuyAsset = nextCandle.Open * quantity + costs;
 
-            return new Transaction(indexedCandle.BackingList, nextCandle.Index, nextCandle.DateTime, TransactionType.Buy, quantity, cashToBuyAsset, costs);
+            return new Transaction(indexedCandle.BackingList, nextCandle.Index, nextCandle.Time, TransactionType.Buy, quantity, cashToBuyAsset, costs);
         }
 
         private decimal DetermineFee(IIndexedOhlcv nextCandle, decimal quantity)
@@ -81,7 +81,7 @@ namespace ES.Analysis.Backtest.FeeCalculators
 
             cashWhenSellAsset -= costs * cashWhenSellAsset;
 
-            return new Transaction(indexedCandle.BackingList, nextCandle.Index, nextCandle.DateTime, TransactionType.Sell, quantity, cashWhenSellAsset, costs);
+            return new Transaction(indexedCandle.BackingList, nextCandle.Index, nextCandle.Time, TransactionType.Sell, quantity, cashWhenSellAsset, costs);
         }
 
         private decimal DetermineTransactionFee(decimal quantity, decimal tradeValue)

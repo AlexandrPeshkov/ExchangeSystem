@@ -6,11 +6,11 @@ using Xunit;
 
 namespace ES.DataImport.Tests.CryptoCompare
 {
-    public class CryptoCompareTests : BaseTest
+    public class CryptoCompareGatewayTests : BaseTest
     {
         private readonly CryptoCompareGateway _gateway;
 
-        public CryptoCompareTests()
+        public CryptoCompareGatewayTests()
         {
             _gateway = _services.GetService<CryptoCompareGateway>();
         }

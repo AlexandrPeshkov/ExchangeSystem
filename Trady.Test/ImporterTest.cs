@@ -68,7 +68,7 @@ namespace Trady.Test
 
             var candles = await importer.ImportAsync(symbol, start, end, period);
 
-            var candle = candles.FirstOrDefault(c => c.DateTime == new DateTime(2017, 1, 3));
+            var candle = candles.FirstOrDefault(c => c.Time == new DateTime(2017, 1, 3));
             Assert.AreEqual(candle.Open, 115.8m);
             Assert.AreEqual(candle.High, 116.33m);
             Assert.AreEqual(candle.Low, 114.76m);
@@ -119,7 +119,7 @@ namespace Trady.Test
             var candles = importer.ImportAsync("FB").Result;
             Assert.AreEqual(candles.Count, 1342);
             var firstIOhlcvData = candles.First();
-            Assert.AreEqual(firstIOhlcvData.DateTime, new DateTime(2012, 5, 18));
+            Assert.AreEqual(firstIOhlcvData.Time, new DateTime(2012, 5, 18));
         }
 
         [TestMethod]
@@ -136,7 +136,7 @@ namespace Trady.Test
             var candles = importer.ImportAsync("EURUSD").Result;
             Assert.AreEqual(744, candles.Count);
             var firstIOhlcvData = candles.First();
-            Assert.AreEqual(new DateTime(2000, 5, 30, 17, 27, 00), firstIOhlcvData.DateTime);
+            Assert.AreEqual(new DateTime(2000, 5, 30, 17, 27, 00), firstIOhlcvData.Time);
         }
     }
 }

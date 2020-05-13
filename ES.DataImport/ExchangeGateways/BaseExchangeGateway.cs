@@ -2,11 +2,13 @@
 using System.Globalization;
 using AutoMapper;
 using ES.Domain.Configurations;
-using ES.Domain.Requests;
+using ES.Domain.Interfaces.Requests;
+using Microsoft.Extensions.Options;
 
 namespace ES.DataImport.StockExchangeGateways
 {
-    public abstract class BaseExchangeGateway
+    public abstract class BaseExchangeGateway<TDefaultRequest>
+        where TDefaultRequest : class, IExchangeRequest, new()
     {
         private string Scheme => SSL ? "HTTPS" : "HTTPS";
 
@@ -14,7 +16,7 @@ namespace ES.DataImport.StockExchangeGateways
 
         protected readonly IMapper _mapper;
 
-        protected readonly StockExchangeKeys _tokens;
+        protected readonly StockExchangeKeys _keys;
 
         protected readonly CultureInfo _cultureInfo;
 
@@ -24,9 +26,9 @@ namespace ES.DataImport.StockExchangeGateways
 
         protected virtual bool SSL { get; } = true;
 
-        protected readonly EmptyRequest _emptyRequest;
+        protected TDefaultRequest _defaultRequest;
 
-        public BaseExchangeGateway(IMapper mapper)
+        public BaseExchangeGateway(IMapper mapper, IOptions<StockExchangeKeys> keys)
         {
             _uriBuilder = new UriBuilder()
             {
@@ -36,8 +38,13 @@ namespace ES.DataImport.StockExchangeGateways
 
             _cultureInfo = CultureInfo.GetCultureInfo("en-US");
             _mapper = mapper;
+            _keys = keys?.Value;
+            _defaultRequest = DefaultRequest();
+        }
 
-            _emptyRequest = new EmptyRequest();
+        protected virtual TDefaultRequest DefaultRequest()
+        {
+            return new TDefaultRequest();
         }
     }
 }

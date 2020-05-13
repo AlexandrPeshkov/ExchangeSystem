@@ -4,6 +4,6 @@ namespace ES.Domain.Interfaces
 {
     public interface ITick
     {
-        DateTime DateTime { get; }
+        DateTime Time { get; }
     }
 }

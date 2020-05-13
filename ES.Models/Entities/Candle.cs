@@ -6,7 +6,7 @@ namespace ES.Domain.Entities
 {
     public class Candle : BaseEntity, IOhlcv
     {
-        public DateTime DateTime { get; set; }
+        public DateTime Time { get; set; }
 
         public decimal Open { get; set; }
 
