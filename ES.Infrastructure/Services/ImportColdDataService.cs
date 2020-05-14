@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using ES.DataImport.StockExchangeGateways;
 using ES.Domain;
+using ES.Domain.ApiResults;
 using ES.Domain.DTO.CryptoCompare;
 using ES.Domain.Entities;
 using ES.Domain.Extensions;
+using ES.Domain.Interfaces.Gateways;
 using Microsoft.EntityFrameworkCore;
 
 namespace ES.Infrastructure.Services
@@ -19,14 +20,14 @@ namespace ES.Infrastructure.Services
     {
         private readonly IMapper _mapper;
 
-        private readonly CryptoCompareGateway _cryptoCompareGateway;
+        private readonly ICryptoCompareGateway _cryptoCompareGateway;
 
         private readonly CoreDBContext _coreDBContext;
 
         private readonly Serilog.ILogger _logger;
 
 
-        public ImportColdDataService(CryptoCompareGateway cryptoCompareGateway,
+        public ImportColdDataService(ICryptoCompareGateway cryptoCompareGateway,
             CoreDBContext coreDBContext,
             IMapper mapper,
             Serilog.ILogger logger
@@ -40,20 +41,20 @@ namespace ES.Infrastructure.Services
 
         public async Task ImportAllCurrencies()
         {
-            List<Currency> currencies = await _cryptoCompareGateway.ImportAllCurrencies();
-            if (currencies?.Any() == true)
+            CommandResult<List<Currency>> result = await _cryptoCompareGateway.AllCurrencies();
+            if (result?.Content?.Any() == true)
             {
-                await _coreDBContext.AddRangeAsync(currencies);
+                await _coreDBContext.AddRangeAsync(result.Content);
                 await _coreDBContext.SaveChangesAsync();
             }
         }
 
         public async Task ImportAllExchanges()
         {
-            List<ExchangeDTO> exchangeDTOs = await _cryptoCompareGateway.ImportAllExchanges();
-            if (exchangeDTOs?.Any() == true)
+            var result = await _cryptoCompareGateway.AllExchanges();
+            if (result?.Content?.Any() == true)
             {
-                List<Exchange> exchanges = _mapper.Map<List<Exchange>>(exchangeDTOs);
+                List<Exchange> exchanges = _mapper.Map<List<Exchange>>(result.Content);
                 if (exchanges?.Any() == true)
                 {
                     await _coreDBContext.AddRangeAsync(exchanges);
@@ -64,7 +65,8 @@ namespace ES.Infrastructure.Services
 
         public async Task ImportAllExchangePairs()
         {
-            List<ExchangePairsDTO> exchangePairsDTOs = await _cryptoCompareGateway.ImportAllExchangePairs();
+            var result = await _cryptoCompareGateway.AllExchangePairs();
+            List<ExchangePairsDTO> exchangePairsDTOs = result?.Content;
             List<Exchange> exchanges = _coreDBContext.Exchanges.AsEnumerable().Where(e => exchangePairsDTOs?.Exists(d => d.Name == e.Name) == true).ToList();
             List<Currency> currencies = await _coreDBContext.Currencies.ToListAsync();
 
@@ -114,7 +116,7 @@ namespace ES.Infrastructure.Services
 
 
                 bool isActive = true;
-               
+
                 if (pair != null)
                 {
                     int currentRequestNumber = 0;
@@ -125,65 +127,68 @@ namespace ES.Infrastructure.Services
                     while (isActive && currentRequestNumber < maxRequestNumber)
                     {
                         long interval = 60;
-                        
-                        List<CandleDTO> candleDTOs = await _cryptoCompareGateway.MinuteCandle(fromSymbol, toSymbol, exchange, currentTimestamp, 3);
-                        currentRequestNumber++;
-                        candles.Clear();
-
-                        if (candleDTOs?.Count > 0)
+                        var result = await _cryptoCompareGateway.MinuteCandle(fromSymbol, toSymbol, exchange, currentTimestamp, 3);
+                        if (result?.IsSuccess == true)
                         {
-                            if(currentRequestNumber > 1)
-                            {
-                                candleDTOs = candleDTOs.Take(candleDTOs.Count - 1).ToList();
-                            }
-                            foreach (var candleDTO in candleDTOs)
-                            {
-                                Candle candle = _mapper.Map<Candle>(candleDTO);
-                                candle.PairId = pair.Id;
-                                candle.TimeClose = candle.TimeOpen + interval;
-                                candle.Interval = interval;
+                            List<CandleDTO> candleDTOs = result?.Content;
+                            currentRequestNumber++;
+                            candles.Clear();
 
-                                candles.Add(candle);
-                            }
-
-                            currentTimestamp = candleDTOs.First().Time;
-
-                            try
+                            if (candleDTOs?.Count > 0)
                             {
-                                var dif = _coreDBContext.Candles
-                                    .Include(x => x.Pair)
-                                    .AsEnumerable()
-                                    .Where(c => c.PairId == pair.Id && candles.Any(x => x.TimeOpen == c.TimeOpen && x.TimeClose == c.TimeClose))
-                                    .ToList();
+                                if (currentRequestNumber > 1)
+                                {
+                                    candleDTOs = candleDTOs.Take(candleDTOs.Count - 1).ToList();
+                                }
+                                foreach (var candleDTO in candleDTOs)
+                                {
+                                    Candle candle = _mapper.Map<Candle>(candleDTO);
+                                    candle.PairId = pair.Id;
+                                    candle.TimeClose = candle.TimeOpen + interval;
+                                    candle.Interval = interval;
 
-                                await _coreDBContext.AddRangeAsync(candles);
-                                await _coreDBContext.SaveChangesAsync();
-                                _logger.Information($"Load {candles.Count} candles for {fromSymbol}-{toSymbol} from {exchange}");
+                                    candles.Add(candle);
+                                }
 
+                                currentTimestamp = candleDTOs.First().Time;
+
+                                try
+                                {
+                                    var dif = _coreDBContext.Candles
+                                        .Include(x => x.Pair)
+                                        .AsEnumerable()
+                                        .Where(c => c.PairId == pair.Id && candles.Any(x => x.TimeOpen == c.TimeOpen && x.TimeClose == c.TimeClose))
+                                        .ToList();
+
+                                    await _coreDBContext.AddRangeAsync(candles);
+                                    await _coreDBContext.SaveChangesAsync();
+                                    _logger.Information($"Load {candles.Count} candles for {fromSymbol}-{toSymbol} from {exchange}");
+
+                                }
+                                catch (DbUpdateException ex)
+                                {
+                                    _logger.Error(ex.GetBaseException(), ex?.InnerException?.Message ?? ex.Message);
+                                }
+                                catch (InvalidOperationException ex)
+                                {
+                                    var dif = _coreDBContext.Candles
+                                        .Include(x => x.Pair)
+                                        .AsEnumerable()
+                                        .Where(c => c.PairId == pair.Id && candles.Any(x => x.TimeOpen == c.TimeOpen && x.TimeClose == c.TimeClose))
+                                        .ToList();
+                                    //var c = candles.GroupBy(x => new { x.TimeOpen, x.TimeClose, x.PairId }).ToArray().Count();
+                                    _logger.Error(ex, "");
+                                }
+                                catch (Exception ex)
+                                {
+                                    //var c = candles.GroupBy(x => new { x.TimeOpen, x.TimeClose, x.PairId }).ToArray().Count();
+                                    _logger.Error(ex, "");
+                                }
                             }
-                            catch (DbUpdateException ex)
+                            else
                             {
-                                _logger.Error(ex.GetBaseException(), ex?.InnerException?.Message ?? ex.Message);
+                                isActive = false;
                             }
-                            catch (InvalidOperationException ex)
-                            {
-                                var dif = _coreDBContext.Candles
-                                    .Include(x => x.Pair)
-                                    .AsEnumerable()
-                                    .Where(c => c.PairId == pair.Id && candles.Any(x => x.TimeOpen == c.TimeOpen && x.TimeClose == c.TimeClose))
-                                    .ToList();
-                                //var c = candles.GroupBy(x => new { x.TimeOpen, x.TimeClose, x.PairId }).ToArray().Count();
-                                _logger.Error(ex, "");
-                            }
-                            catch (Exception ex)
-                            {
-                                //var c = candles.GroupBy(x => new { x.TimeOpen, x.TimeClose, x.PairId }).ToArray().Count();
-                                _logger.Error(ex, "");
-                            }
-                        }
-                        else
-                        {
-                            isActive = false;
                         }
                     }
                 }

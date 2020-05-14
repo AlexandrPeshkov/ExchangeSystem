@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using AutoMapper;
 using ES.API.Filters;
-using ES.DataImport.StockExchangeGateways;
-using ES.DataImport.UseCase;
 using ES.Domain;
 using ES.Domain.Configurations;
 using ES.Domain.Constants;
-using ES.Domain.Interfaces.UseCases;
+using ES.Domain.Interfaces.Gateways;
+using ES.Gateway.Interfaces.UseCases;
+using ES.Gateway.StockExchangeGateways;
+using ES.Gateway.UseCase;
 using ES.Infrastructure.Mapper;
 using ES.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
@@ -36,6 +38,10 @@ namespace ES.Api
             services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+            })
+                .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
             services.Configure<StockExchangeKeys>(Configuration.GetSection(nameof(StockExchangeKeys)));
@@ -43,11 +49,11 @@ namespace ES.Api
             services.AddAutoMapper(new Type[]
             {
                 typeof(GatewayToDTO),
+                typeof(EntityToView),
             });
 
             services.AddSwaggerGen(c =>
             {
-                c.DescribeAllEnumsAsStrings();
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Exchange Storage System API", Version = "v1" });
                 c.IncludeXmlComments($@"{AppDomain.CurrentDomain.BaseDirectory}\ES.API.XML");
             });
@@ -58,7 +64,7 @@ namespace ES.Api
                     Configuration.GetConnectionString(ContextContstants.ConnectionStringCoreDB));
             });
 
-            services.AddTransient<CryptoCompareGateway>();
+            services.AddTransient<ICryptoCompareGateway, CryptoCompareGateway>();
             services.AddTransient<ImportColdDataService>();
 
             //services.AddSingleton<ExchangeHolder>();

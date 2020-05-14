@@ -12,12 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ES.DataImport\ES.DataImport.csproj" />
     <ProjectReference Include="..\ES.Domain\ES.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Interfaces\Services\" />
+    <Folder Include="UseCases\" />
   </ItemGroup>
 
 </Project>
