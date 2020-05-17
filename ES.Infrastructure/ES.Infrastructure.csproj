@@ -13,11 +13,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ES.Domain\ES.Data.csproj" />
+    <ProjectReference Include="..\ES.Gateway\ES.Gateway.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Interfaces\Services\" />
-    <Folder Include="UseCases\" />
   </ItemGroup>
 
 </Project>

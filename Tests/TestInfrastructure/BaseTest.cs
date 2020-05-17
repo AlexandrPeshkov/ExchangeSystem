@@ -61,6 +61,7 @@ namespace TestInfrastructure
             services.AddTransient(provider => Context());
 
             services.AddTransient<ICryptoCompareGateway, CryptoCompareGateway>();
+            services.AddTransient<IAlphaVantageGateway, AlphaVantageGateway>();
             services.AddTransient<ImportColdDataService>();
 
            
@@ -73,7 +74,7 @@ namespace TestInfrastructure
         {
             var assembly = Assembly.GetAssembly(typeof(BaseGatewayUseCase<,,>))
                 .GetTypes()
-                .Where(t => t.IsGenericType == false && t.GetInterfaces().FirstOrDefault(i => i?.Name == typeof(IUseCase<,,>)?.Name) != null);
+                .Where(t => t.IsGenericType == false && t.GetInterfaces().FirstOrDefault(i => i?.Name == typeof(IGatewayUseCase<,,>)?.Name) != null);
 
             foreach (var useCase in assembly)
             {

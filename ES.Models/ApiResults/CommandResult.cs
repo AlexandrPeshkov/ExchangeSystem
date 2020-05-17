@@ -2,9 +2,10 @@
 
 namespace ES.Domain.ApiResults
 {
-    public class CommandResult<TContent> : BaseApiResult
+    public class CommandResult<TContent> : BaseCommandResult
     {
         public TContent Content { get; set; }
+
         public CommandResult(TContent content = default, List<string> messages = null, bool isSuccess = true)
         {
             Messages = messages ?? new List<string>();

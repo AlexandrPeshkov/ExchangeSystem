@@ -11,8 +11,10 @@ using ES.Domain.Interfaces.Gateways;
 using ES.Gateway.Interfaces.UseCases;
 using ES.Gateway.StockExchangeGateways;
 using ES.Gateway.UseCase;
+using ES.Infrastructure.Interfaces;
 using ES.Infrastructure.Mapper;
 using ES.Infrastructure.Services;
+using ES.Infrastructure.UseCases;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -65,18 +67,34 @@ namespace ES.Api
             });
 
             services.AddTransient<ICryptoCompareGateway, CryptoCompareGateway>();
+            services.AddTransient<IAlphaVantageGateway, AlphaVantageGateway>();
             services.AddTransient<ImportColdDataService>();
 
             //services.AddSingleton<ExchangeHolder>();
             //services.AddSingleton<CurrencyHolder>();
-            AddUseCases(services);
+            AddGatewayUseCases(services);
+            AddContextUseCases(services);
         }
 
-        private void AddUseCases(IServiceCollection services)
+        private void AddGatewayUseCases(IServiceCollection services)
         {
             var assembly = Assembly.GetAssembly(typeof(BaseGatewayUseCase<,,>))
                 .GetTypes()
-                .Where(t => t.IsGenericType == false && t.GetInterfaces().FirstOrDefault(i => i?.Name == typeof(IUseCase<,,>)?.Name) != null);
+                .Where(t => t.IsGenericType == false && t.GetInterfaces()
+                .FirstOrDefault(i => i?.Name == typeof(IGatewayUseCase<,,>)?.Name) != null);
+
+            foreach (var useCase in assembly)
+            {
+                services.AddTransient(useCase);
+            }
+        }
+
+        private void AddContextUseCases(IServiceCollection services)
+        {
+            var assembly = Assembly.GetAssembly(typeof(BaseContextUseCase<,>))
+                .GetTypes()
+                .Where(t => t.IsGenericType == false && t.GetInterfaces()
+                .FirstOrDefault(i => i?.Name == typeof(IContextUseCase<,>)?.Name) != null);
 
             foreach (var useCase in assembly)
             {

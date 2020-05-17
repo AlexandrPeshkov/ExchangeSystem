@@ -11,14 +11,5 @@ namespace ES.API.Controllers
     [ApiController]
     public abstract class BaseController : ControllerBase
     {
-        public CommandResult<TContent> OkResult<TContent>(TContent content, params string[] messages)
-        {
-            return new CommandResult<TContent>(content, messages?.ToList(), true);
-        }
-
-        public CommandResult<TContent> ErrorResult<TContent>(params string[] messages)
-        {
-            return new CommandResult<TContent>(messages: messages?.ToList(), isSuccess: false);
-        }
     }
 }

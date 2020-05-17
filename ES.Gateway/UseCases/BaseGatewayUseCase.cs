@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace ES.Gateway.UseCase
 {
-    public abstract class BaseGatewayUseCase<TRequest, TResponse, TView> : IUseCase<TRequest, TResponse, TView>
+    public abstract class BaseGatewayUseCase<TRequest, TResponse, TView> : IGatewayUseCase<TRequest, TResponse, TView>
         where TRequest : IExchangeRequest
         where TView : class
     {
@@ -26,9 +26,8 @@ namespace ES.Gateway.UseCase
         protected readonly CommandResult<TView> _commandResult;
 
         protected abstract string UriPath { get; }
+
         protected abstract HttpMethod HttpMethod { get; }
-
-
 
         public BaseGatewayUseCase(IOptions<StockExchangeKeys> keys, IMapper mapper)
         {
@@ -39,24 +38,25 @@ namespace ES.Gateway.UseCase
 
         public async Task<CommandResult<TView>> Execute(TRequest request, UriBuilder uriBuilder)
         {
-            InitRequest(request, uriBuilder);
+            _httpClient = new HttpClient
+            {
+                BaseAddress = uriBuilder.Uri
+            };
+
+            InitRequest(request);
+
+            AddApiKey(ref _httpClient, uriBuilder);
+            SetPath(UriPath, uriBuilder);
+
+            uriBuilder.Query = request?.ToQuery();
+
             TResponse response = await SendRequest(uriBuilder);
             TView view = MapResponse(response);
             _commandResult.Content = view;
             return _commandResult;
         }
 
-        protected void InitRequest(TRequest request, UriBuilder uriBuilder)
-        {
-            _httpClient = new HttpClient
-            {
-                BaseAddress = uriBuilder.Uri
-            };
-            AddApiKey(ref _httpClient, uriBuilder);
-            SetPath(UriPath, uriBuilder);
-
-            uriBuilder.Query = request?.ToQuery();
-        }
+        protected virtual void InitRequest(TRequest request) { }
 
         protected async Task<TResponse> SendRequest(UriBuilder uriBuilder)
         {
@@ -119,6 +119,10 @@ namespace ES.Gateway.UseCase
                         OkResult(view);
                     }
                     ErrorResult("Error map respose to view");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    ErrorResult("Error mapping type");
                 }
                 catch (Exception ex)
                 {

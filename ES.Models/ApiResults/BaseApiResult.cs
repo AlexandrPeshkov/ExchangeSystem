@@ -2,7 +2,7 @@
 
 namespace ES.Domain.ApiResults
 {
-    public class BaseApiResult
+    public class BaseCommandResult
     {
         public List<string> Messages { get; set; }
 

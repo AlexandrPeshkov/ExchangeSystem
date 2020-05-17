@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using ES.Domain.DTO.AphaVantage;
 using ES.Domain.DTO.CryptoCompare;
 using ES.Domain.Entities;
+using ES.Gateway.Responses.AlphaVantage;
+using static ES.Gateway.Responses.AlphaVantage.CryptoRatingResponse;
 
 namespace ES.Infrastructure.Mapper
 {
@@ -14,6 +17,9 @@ namespace ES.Infrastructure.Mapper
 
             CreateMap<ExchangeDTO, Exchange>()
                 .ForMember(d => d.WebSite, d => d.MapFrom(s => s.AffiliateURL));
+
+            CreateMap<CryptoRatingData, CryptoRatingDTO>();
+            CreateMap<CryptoRatingResponse, CryptoRatingDTO>();
         }
     }
 }

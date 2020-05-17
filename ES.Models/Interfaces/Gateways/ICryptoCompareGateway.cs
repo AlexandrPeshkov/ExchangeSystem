@@ -7,6 +7,9 @@ using ES.Domain.Entities;
 
 namespace ES.Domain.Interfaces.Gateways
 {
+    /// <summary>
+    /// Шлюз CryptoCompare
+    /// </summary>
     public interface ICryptoCompareGateway
     {
         /// <summary>
