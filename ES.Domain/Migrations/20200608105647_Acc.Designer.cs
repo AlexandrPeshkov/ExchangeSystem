@@ -3,15 +3,17 @@ using System;
 using ES.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ES.Data.Migrations
 {
     [DbContext(typeof(CoreDBContext))]
-    partial class CoreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200608105647_Acc")]
+    partial class Acc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,12 +28,9 @@ namespace ES.Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasAlternateKey("Email");
 
                     b.ToTable("Accounts");
                 });
@@ -113,6 +112,9 @@ namespace ES.Data.Migrations
                     b.Property<string>("SmartContractAddress")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("SubscriptionId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Symbol")
                         .IsRequired()
                         .HasColumnType("text");
@@ -123,6 +125,8 @@ namespace ES.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasAlternateKey("Symbol");
+
+                    b.HasIndex("SubscriptionId");
 
                     b.ToTable("Currencies");
                 });
@@ -200,17 +204,12 @@ namespace ES.Data.Migrations
                     b.Property<Guid?>("AccountId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CurrencyId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Predicate")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
-
-                    b.HasIndex("CurrencyId");
 
                     b.ToTable("Subscriptions");
                 });
@@ -226,6 +225,13 @@ namespace ES.Data.Migrations
                         .HasForeignKey("PairId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ES.Domain.Entities.Currency", b =>
+                {
+                    b.HasOne("ES.Domain.Entities.Subscription", null)
+                        .WithMany("Currencies")
+                        .HasForeignKey("SubscriptionId");
                 });
 
             modelBuilder.Entity("ES.Domain.Entities.ExchangePair", b =>
@@ -254,12 +260,6 @@ namespace ES.Data.Migrations
                     b.HasOne("ES.Domain.Entities.Account", null)
                         .WithMany("Subscriptions")
                         .HasForeignKey("AccountId");
-
-                    b.HasOne("ES.Domain.Entities.Currency", "Currency")
-                        .WithMany()
-                        .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

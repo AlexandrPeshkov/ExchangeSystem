@@ -47,12 +47,13 @@ namespace ES.Domain
 
             modelBuilder.Entity<Subscription>(e =>
             {
-                e.HasMany(x => x.Currencies);
+                e.HasOne(x => x.Currency);
             });
 
             modelBuilder.Entity<Account>(e =>
             {
                 e.HasMany(x => x.Subscriptions);
+                e.HasAlternateKey(x => x.Email);
             });
         }
     }

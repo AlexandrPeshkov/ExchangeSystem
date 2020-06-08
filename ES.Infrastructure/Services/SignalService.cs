@@ -1,14 +1,16 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using ES.Domain;
 using ES.Domain.ApiCommands;
 using ES.Domain.ApiResults;
+using ES.Domain.Constants;
 using ES.Domain.DTO.CryptoCompare;
 using ES.Domain.Entities;
 using ES.Domain.Interfaces.Gateways;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace ES.Infrastructure.Services
@@ -21,60 +23,68 @@ namespace ES.Infrastructure.Services
 
         private readonly Timer _timer;
 
-        private readonly CoreDBContext _dBContext;
+        private readonly string _connectionString;
 
-        public SignalService(EmailService emailService, ICryptoCompareGateway cryptoCompareGateway, CoreDBContext dBContext)
+        public SignalService(EmailService emailService, ICryptoCompareGateway cryptoCompareGateway, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
+            _connectionString = configuration.GetConnectionString(ContextContstants.ConnectionStringCoreDB);
             _emailService = emailService;
             _cryptoCompareGateway = cryptoCompareGateway;
-            _dBContext = dBContext;
 
             _timer = new Timer();
             _timer.Elapsed += OnTimerElapsed;
-            _timer.Interval = 1000 * 10;
-            _timer.AutoReset = true;
+            _timer.Interval = 1000 * 60 * 5;
+            //_timer.AutoReset = true;
+
+            _timer.Start();
         }
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            List<Account> accounts = _dBContext.Accounts.ToList();
-
-            List<SignalsDTO> signalsDTOs = new List<SignalsDTO>();
-
-            Dictionary<string, List<SignalsDTO>> userSignals = new Dictionary<string, List<SignalsDTO>>(accounts.Count);
-
-            List<string> currencies = accounts.SelectMany(x => x.Subscriptions?.SelectMany(s => s.Currencies?.Select(c => c?.Name))).Distinct().ToList();
-
-            foreach (var currency in currencies)
+            _timer.Stop();
+            using (var context = new CoreDBContext(new DbContextOptionsBuilder<CoreDBContext>().UseNpgsql(_connectionString).Options))
             {
-                SignalsDTO signal = CheckSignals(currency).Result;
-                if (signal != null)
-                {
-                    signalsDTOs.Add(signal);
-                }
-            }
+                List<Account> accounts = context?.Accounts?
+                    .Include(a => a.Subscriptions)
+                    .ThenInclude(s => s.Currency)
+                    .ToList();
 
-            foreach (var account in accounts)
-            {
-                foreach (var subscription in account?.Subscriptions)
+                List<SignalsDTO> signalsDTOs = new List<SignalsDTO>();
+
+                Dictionary<string, List<SignalsDTO>> userSignals = new Dictionary<string, List<SignalsDTO>>(accounts?.Count ?? 0);
+
+                List<string> currencies = accounts?.SelectMany(x => x.Subscriptions?.Select(s => s?.Currency?.Name))?.Distinct()?.ToList();
+
+                foreach (var currency in currencies)
                 {
-                    foreach (var currency in subscription?.Currencies)
+                    SignalsDTO signal = CheckSignals(currency).Result;
+                    if (signal != null)
                     {
-                        if (currencies.Contains(currency?.Name))
+                        signalsDTOs.Add(signal);
+                    }
+                }
+
+                foreach (var account in accounts)
+                {
+                    foreach (var subscription in account?.Subscriptions)
+                    {
+                        if (currencies.Contains(subscription?.Currency?.Name))
                         {
                             if (userSignals.TryGetValue(account?.Email, out var signals) == false)
                             {
                                 signals = new List<SignalsDTO>();
                                 userSignals.Add(account?.Email, signals);
                             }
-                            if (signals.Exists(s => s.Symbol == currency?.Symbol) == false)
+                            if (signals.Exists(s => s.Symbol == subscription?.Currency?.Symbol) == false)
                             {
-                                SignalsDTO signal = signalsDTOs.FirstOrDefault(s => s.Symbol == currency.Symbol);
+                                SignalsDTO signal = signalsDTOs.FirstOrDefault(s => s.Symbol == subscription?.Currency.Symbol);
                                 signals.Add(signal);
                             }
                         }
                     }
                 }
+
+                SendSignals(userSignals);
             }
         }
 

@@ -1,16 +1,17 @@
 ﻿using System.Threading.Tasks;
-using ES.Domain;
-using ES.Domain.Entities;
+using ES.Domain.ApiResults;
+using ES.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ES.API.Controllers
 {
     public class AccountController : BaseController
     {
-        private readonly CoreDBContext _dbContext;
-        public AccountController(CoreDBContext dbContext)
+        private readonly AccountService _accountService;
+
+        public AccountController(AccountService accountService)
         {
-            _dbContext = dbContext;
+            _accountService = accountService;
         }
 
         /// <summary>
@@ -18,15 +19,24 @@ namespace ES.API.Controllers
         /// </summary>
         /// <param name="email">Почта</param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> CreateAccount(string email)
+        [HttpPost(nameof(CreateAccount))]
+        public async Task<CommandResult<string>> CreateAccount(string email)
         {
-            Account account = new Account
-            {
-                Email = email
-            };
-            var result = await _dbContext.Accounts.AddAsync(account);
-            return Created(email, result);
+            var commandResult = await _accountService.CreateAccount(email);
+            return commandResult;
+        }
+
+        /// <summary>
+        /// Добавить подписку
+        /// </summary>
+        /// <param name="email">Почта</param>
+        /// <param name="currency">Валюта</param>
+        /// <returns></returns>
+        [HttpPost(nameof(AddSubscription))]
+        public async Task<CommandResult<string>> AddSubscription(string email, string currency)
+        {
+            var commandResult = await _accountService.AddSubscription(email, currency);
+            return commandResult;
         }
     }
 }

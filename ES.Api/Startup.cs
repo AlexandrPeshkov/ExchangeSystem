@@ -70,6 +70,10 @@ namespace ES.Api
             services.AddTransient<IAlphaVantageGateway, AlphaVantageGateway>();
             services.AddTransient<ImportColdDataService>();
 
+            services.AddTransient<AccountService>();
+            services.AddSingleton<SignalService>();
+            services.AddSingleton<EmailService>();
+
             //services.AddSingleton<ExchangeHolder>();
             //services.AddSingleton<CurrencyHolder>();
             AddGatewayUseCases(services);
@@ -104,6 +108,7 @@ namespace ES.Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            InitNonLazy(app);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -128,6 +133,11 @@ namespace ES.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void InitNonLazy(IApplicationBuilder app)
+        {
+            app.ApplicationServices.GetService<SignalService>();
         }
     }
 }

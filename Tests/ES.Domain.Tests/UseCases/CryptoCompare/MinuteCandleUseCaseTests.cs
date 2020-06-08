@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
-using ES.Gateway.Requests.CryptoCompare;
 using ES.Domain.Constants;
 using ES.Domain.Extensions;
-using ES.Domain.UseCase.CryptoCompare;
+using ES.Domain.UseCase.CryptoCompare.Historical;
+using ES.Gateway.Requests.CryptoCompare;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -38,8 +37,8 @@ namespace ES.Domain.Tests.UseCases.CryptoCompare
             var response = await _useCase.Execute(request, _uriBuilder);
 
             Assert.NotNull(response);
-//            Assert.NotEmpty(response.Content);
- //           Assert.True(response.Content.All(c => c.Time <= request.ToTimeStamp));
+            //            Assert.NotEmpty(response.Content);
+            //           Assert.True(response.Content.All(c => c.Time <= request.ToTimeStamp));
         }
     }
 }
