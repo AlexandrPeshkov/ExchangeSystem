@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ES.Analysis.SimpleRuleExecutor">
+    <Position X="8" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SimpleRuleExecutor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ES.Analysis.Infrastructure.RuleExecutorBase&lt;TInput, TIndexed, TOutput&gt;">
+    <Position X="7.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAACAAAQABAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\RuleExecutorBase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Rules" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Predicate&lt;T&gt;" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="ES.Domain.Interfaces.IRuleExecutor&lt;TInput, TIndexed, TOutput&gt;" Collapsed="true">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="ES.Domain.Interfaces.IAnalyzeContext" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="ES.Domain.Interfaces.IAnalyzeContext&lt;TInput&gt;" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="ES.Domain.Interfaces.IIndexedObject" Collapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="ES.Domain.Interfaces.IIndexedObject&lt;T&gt;">
+    <Position X="11" Y="2.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -2,7 +2,10 @@
 
 namespace ES.Gateway.Requests.CryptoCompare
 {
-    public class MinuteCandleRequest : BaseCryptoComparePairRequest
+    /// <summary>
+    /// Модель запроса исторических данных
+    /// </summary>
+    public class HistoricalCandleRequest : BaseCryptoComparePairRequest
     {
         /// <summary>
         /// Лимит (max 2000)
@@ -16,7 +19,7 @@ namespace ES.Gateway.Requests.CryptoCompare
         [QueryParam("toTs")]
         public long ToTimeStamp { get; set; }
 
-        public MinuteCandleRequest(BaseCryptoCompareRequest baseRequest = null) : base(baseRequest)
+        public HistoricalCandleRequest(BaseCryptoCompareRequest baseRequest = null) : base(baseRequest)
         {
         }
     }

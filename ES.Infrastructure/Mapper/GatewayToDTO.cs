@@ -4,6 +4,7 @@ using ES.Domain.DTO.CryptoCompare;
 using ES.Domain.Entities;
 using ES.Gateway.Responses.AlphaVantage;
 using static ES.Gateway.Responses.AlphaVantage.CryptoRatingResponse;
+using static ES.Gateway.Responses.CryptoCompare.SignalsResponse;
 
 namespace ES.Infrastructure.Mapper
 {
@@ -20,6 +21,8 @@ namespace ES.Infrastructure.Mapper
 
             CreateMap<CryptoRatingData, CryptoRatingDTO>();
             CreateMap<CryptoRatingResponse, CryptoRatingDTO>();
+
+            CreateMap<TradingSignalsResponse, SignalsDTO>();
         }
     }
 }

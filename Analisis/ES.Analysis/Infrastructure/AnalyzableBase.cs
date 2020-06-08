@@ -96,7 +96,7 @@ namespace ES.Analysis.Infrastructure
             var datetime = index >= 0 && index < _mappedInputs.Count ? (_mappedDateTimes?[index] ?? default(DateTime?)) : default(DateTime?);
             return _isTOutputAnalysis ? AnalysisMapper(datetime, outputToMap) : outputToMap;
 
-            TOutput AnalysisMapper(DateTimeOffset? d, TOutputToMap otm)
+            TOutput AnalysisMapper(DateTime? d, TOutputToMap otm)
             {
                 Type concreteType = _isTOutputAnalysis ? typeof(Analysis<TOutputToMap>) : typeof(TOutput);
                 return (TOutput)concreteType.GetConstructors().First().Invoke(new object[] { d, otm });

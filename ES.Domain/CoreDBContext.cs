@@ -9,6 +9,8 @@ namespace ES.Domain
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<ExchangePair> Pairs { get; set; }
         public DbSet<Candle> Candles { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
 
         public CoreDBContext(DbContextOptions<CoreDBContext> options)
          : base(options)
@@ -41,6 +43,16 @@ namespace ES.Domain
             modelBuilder.Entity<Candle>(e =>
             {
                 e.HasAlternateKey(e => new { e.TimeOpen, e.TimeClose, e.PairId });
+            });
+
+            modelBuilder.Entity<Subscription>(e =>
+            {
+                e.HasMany(x => x.Currencies);
+            });
+
+            modelBuilder.Entity<Account>(e =>
+            {
+                e.HasMany(x => x.Subscriptions);
             });
         }
     }

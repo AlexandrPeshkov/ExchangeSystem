@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="ES.Analysis.Infrastructure.NumericAnalyzableBase&lt;TInput, TMappedInput, TOutput&gt;" Collapsed="true">
+    <Position X="56.75" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAECAQAAAAAABIAAAAIAAgAAABAgAAAAAAAEBgAAAA=</HashCode>
+      <FileName>Infrastructure\NumericAnalyzableBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ES.Analysis.Indicator.ExponentialMovingAverage&lt;TInput, TOutput&gt;" Collapsed="true">
+    <Position X="54.5" Y="5.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Indicator\ExponentialMovingAverage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ES.Analysis.Indicator.ExponentialMovingAverageByTuple" Collapsed="true">
+    <Position X="55.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\ExponentialMovingAverage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ES.Analysis.Indicator.ExponentialMovingAverage" Collapsed="true">
+    <Position X="53.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\ExponentialMovingAverage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ES.Analysis.Indicator.ExponentialMovingAverageOscillator&lt;TInput, TOutput&gt;" Collapsed="true">
+    <Position X="58.25" Y="5.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAIAAAAAAAAAAABAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Indicator\ExponentialMovingAverageOscillator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ES.Analysis.Indicator.ExponentialMovingAverageOscillatorByTuple" Collapsed="true">
+    <Position X="60.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\ExponentialMovingAverageOscillator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ES.Analysis.Indicator.ExponentialMovingAverageOscillator" Collapsed="true">
+    <Position X="58" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Indicator\ExponentialMovingAverageOscillator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -4,9 +4,9 @@ using ES.Data.UseCases;
 using ES.Domain.ApiCommands;
 using ES.Domain.ApiResults;
 using ES.Domain.DTO.AphaVantage;
+using ES.Domain.DTO.CryptoCompare;
 using ES.Domain.Interfaces.Gateways;
 using ES.Domain.ViewModels;
-using ES.Gateway.UseCases.AlphaVantage;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ES.API.Controllers
@@ -19,10 +19,13 @@ namespace ES.API.Controllers
         private readonly AllCurrencyUseCase _allCurrencyUseCase;
 
         private readonly IAlphaVantageGateway _alphaVantageGateway;
-        public CurrencyController(AllCurrencyUseCase allCurrencyUseCase, IAlphaVantageGateway alphaVantageGateway)
+
+        private readonly ICryptoCompareGateway _cryptoCompareGateway;
+        public CurrencyController(AllCurrencyUseCase allCurrencyUseCase, IAlphaVantageGateway alphaVantageGateway, ICryptoCompareGateway cryptoCompareGateway)
         {
             _allCurrencyUseCase = allCurrencyUseCase;
             _alphaVantageGateway = alphaVantageGateway;
+            _cryptoCompareGateway = cryptoCompareGateway;
         }
 
         /// <summary>
@@ -36,6 +39,7 @@ namespace ES.API.Controllers
             return result;
         }
 
+
         /// <summary>
         /// Рейтинг криптовалюты
         /// </summary>
@@ -44,6 +48,18 @@ namespace ES.API.Controllers
         public async Task<CommandResult<CryptoRatingDTO>> Rating(string symbol)
         {
             var result = await _alphaVantageGateway.CryptoRating(symbol);
+            return await Task.FromResult(result);
+        }
+
+        /// <summary>
+        /// Испорт исторических данных
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet(nameof(HistoricalData))]
+        public async Task<CommandResult<List<CandleDTO>>> HistoricalData([FromQuery]HistoricalCandleCommand command)
+        {
+            var result = await _cryptoCompareGateway.HistoricalCandle(command);
             return result;
         }
     }

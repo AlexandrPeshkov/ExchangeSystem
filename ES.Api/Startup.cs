@@ -80,7 +80,7 @@ namespace ES.Api
         {
             var assembly = Assembly.GetAssembly(typeof(BaseGatewayUseCase<,,>))
                 .GetTypes()
-                .Where(t => t.IsGenericType == false && t.GetInterfaces()
+                .Where(t => t.IsGenericType == false && t.IsAbstract == false && t.GetInterfaces()
                 .FirstOrDefault(i => i?.Name == typeof(IGatewayUseCase<,,>)?.Name) != null);
 
             foreach (var useCase in assembly)

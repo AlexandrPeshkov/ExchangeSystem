@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Web;
 using ES.Domain.Extensions.Attributes;
@@ -30,6 +32,14 @@ namespace ES.Domain.Extensions
                     if (prop.PropertyType == typeof(bool))
                     {
                         value = value.ToLower();
+                    }
+
+                    if (prop.PropertyType.BaseType == typeof(Enum))
+                    {
+                        var enumFields = prop.PropertyType.GetFields();
+                        string enumFieldName = Enum.GetName(prop.PropertyType, val);
+                        FieldInfo enumField = enumFields.FirstOrDefault(f => f.Name == enumFieldName);
+                        value = enumField?.GetCustomAttribute<EnumNameAttribute>()?.Name?.ToLower() ?? enumFieldName;
                     }
 
                     if (prop.PropertyType.GetInterface(nameof(IEnumerable)) != null && prop.PropertyType != typeof(string)

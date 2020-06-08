@@ -33,8 +33,8 @@ namespace ES.Infrastructure.Extensions
             if (typeof(TSourcePeriod).Equals(typeof(TTargetPeriod)))
                 return candles.ToList();
 
-            if (!IsTimeframesValid<TSourcePeriod>(candles, out var err))
-                throw new InvalidTimeframeException(err.Time);
+            //if (!IsTimeframesValid<TSourcePeriod>(candles, out var err))
+            //    throw new InvalidTimeframeException(err.Time);
 
             if (!IsTransformationValid<TSourcePeriod, TTargetPeriod>())
                 throw new InvalidTransformationException(typeof(TSourcePeriod), typeof(TTargetPeriod));

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ES.Domain;
+using ES.Domain.ApiCommands;
 using ES.Domain.ApiResults;
+using ES.Domain.DTO.AphaVantage.Enums;
 using ES.Domain.DTO.CryptoCompare;
 using ES.Domain.Entities;
 using ES.Domain.Extensions;
@@ -127,7 +129,20 @@ namespace ES.Infrastructure.Services
                     while (isActive && currentRequestNumber < maxRequestNumber)
                     {
                         long interval = 60;
-                        var result = await _cryptoCompareGateway.MinuteCandle(fromSymbol, toSymbol, exchange, currentTimestamp, 3);
+                        //var result = await _cryptoCompareGateway.MinuteCandle(fromSymbol, toSymbol, exchange, currentTimestamp, 3);
+                        var command = new HistoricalCandleCommand
+                        {
+                            FromSymbol = fromSymbol,
+                            ToSymbol = toSymbol,
+                            Exchange = exchange,
+                            BeforeTimestamp = currentTimestamp,
+                            Limit = 3,
+                            Period = AlphaVantageHistoricalPeriod.OneMinute
+                        };
+
+                        var result = await _cryptoCompareGateway.HistoricalCandle(command);
+
+
                         if (result?.IsSuccess == true)
                         {
                             List<CandleDTO> candleDTOs = result?.Content;

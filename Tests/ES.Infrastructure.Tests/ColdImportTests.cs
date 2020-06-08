@@ -197,7 +197,10 @@ namespace ES.Infrastructure.Tests
                 cntx.SaveChanges();
             }
 
-            await _coldImportTests.ImportAllMinutePairCandles(from, to, exchange);
+            Parallel.For(0, 1000, async (i) =>
+            {
+                await _coldImportTests.ImportAllMinutePairCandles(from, to, exchange);
+            });
 
             var context = Context();
             bool isAll60 = await context.Candles.AllAsync(x => x.Interval == 60);

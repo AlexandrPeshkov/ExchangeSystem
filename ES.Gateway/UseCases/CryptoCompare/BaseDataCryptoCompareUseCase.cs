@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Net.Http;
 using AutoMapper;
-using ES.Gateway.Responses.CryptoCompare;
 using ES.Domain.Configurations;
 using ES.Gateway.Interfaces.Requests;
+using ES.Gateway.Responses.CryptoCompare;
 using Microsoft.Extensions.Options;
 
 namespace ES.Gateway.UseCase.CryptoCompare
