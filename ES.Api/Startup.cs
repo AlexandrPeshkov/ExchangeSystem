@@ -47,6 +47,7 @@ namespace ES.Api
             });
 
             services.Configure<StockExchangeKeys>(Configuration.GetSection(nameof(StockExchangeKeys)));
+            services.Configure<SignalConfiguration>(Configuration.GetSection(nameof(SignalConfiguration)));
 
             services.AddAutoMapper(new Type[]
             {
@@ -74,8 +75,6 @@ namespace ES.Api
             services.AddSingleton<SignalService>();
             services.AddSingleton<EmailService>();
 
-            //services.AddSingleton<ExchangeHolder>();
-            //services.AddSingleton<CurrencyHolder>();
             AddGatewayUseCases(services);
             AddContextUseCases(services);
         }

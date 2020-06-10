@@ -43,11 +43,20 @@ namespace ES.Gateway.StockExchangeGateways
 
         private readonly SmaUseCase _smaUseCase;
 
+        private readonly VwapUseCase _vwapUseCase;
+
+        private readonly MacdUseCase _macdUseCase;
+
+        private readonly StochUseCase _stochUseCase;
+
         public AlphaVantageGateway(IMapper mapper, IOptions<StockExchangeKeys> keys,
             CryptoRatingUseCase cryptoRatingUseCase,
             BollingerBandsUseCase bollingerBandsUseCase,
             EmaUseCase emaUseCase,
-            SmaUseCase smaUseCase
+            SmaUseCase smaUseCase,
+            VwapUseCase vwapUseCase,
+            MacdUseCase macdUseCase,
+            StochUseCase stochUseCase
             )
             : base(mapper, keys)
         {
@@ -61,6 +70,9 @@ namespace ES.Gateway.StockExchangeGateways
             _bollingerBandsUseCase = bollingerBandsUseCase;
             _emaUseCase = emaUseCase;
             _smaUseCase = smaUseCase;
+            _vwapUseCase = vwapUseCase;
+            _macdUseCase = macdUseCase;
+            _stochUseCase = stochUseCase;
         }
 
         protected override BaseAlphaVantageRequest DefaultRequest()
@@ -110,6 +122,27 @@ namespace ES.Gateway.StockExchangeGateways
         {
             var request = AnalysisRequest(command);
             var result = await _smaUseCase.Execute(request, _uriBuilder);
+            return result;
+        }
+
+        public async Task<CommandResult<AnalysisDTO>> VWAP(BaseAnalysisCommand command)
+        {
+            var request = AnalysisRequest(command);
+            var result = await _vwapUseCase.Execute(request, _uriBuilder);
+            return result;
+        }
+
+        public async Task<CommandResult<AnalysisDTO>> MACD(BaseAnalysisCommand command)
+        {
+            var request = AnalysisRequest(command);
+            var result = await _macdUseCase.Execute(request, _uriBuilder);
+            return result;
+        }
+
+        public async Task<CommandResult<AnalysisDTO>> STOCH(BaseAnalysisCommand command)
+        {
+            var request = AnalysisRequest(command);
+            var result = await _stochUseCase.Execute(request, _uriBuilder);
             return result;
         }
     }

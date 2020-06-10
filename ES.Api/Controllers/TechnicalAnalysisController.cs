@@ -54,5 +54,41 @@ namespace ES.API.Controllers
             var result = await _alphaVantageGateway.SMA(command);
             return Ok(result?.Content?.Data);
         }
+
+        /// <summary>
+        /// VWAP
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet(nameof(VWAP))]
+        public async Task<IActionResult> VWAP([FromQuery] BaseAnalysisCommand command)
+        {
+            var result = await _alphaVantageGateway.VWAP(command);
+            return Ok(result?.Content?.Data);
+        }
+
+        /// <summary>
+        /// MACD
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet(nameof(MACD))]
+        public async Task<IActionResult> MACD([FromQuery] BaseAnalysisCommand command)
+        {
+            var result = await _alphaVantageGateway.MACD(command);
+            return Ok(result?.Content?.Data);
+        }
+
+        /// <summary>
+        /// STOCH
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpGet(nameof(STOCH))]
+        public async Task<IActionResult> STOCH([FromQuery] BaseAnalysisCommand command)
+        {
+            var result = await _alphaVantageGateway.STOCH(command);
+            return Ok(result?.Content?.Data);
+        }
     }
 }

@@ -5,12 +5,14 @@ using System.Timers;
 using ES.Domain;
 using ES.Domain.ApiCommands;
 using ES.Domain.ApiResults;
+using ES.Domain.Configurations;
 using ES.Domain.Constants;
 using ES.Domain.DTO.CryptoCompare;
 using ES.Domain.Entities;
 using ES.Domain.Interfaces.Gateways;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace ES.Infrastructure.Services
@@ -25,15 +27,21 @@ namespace ES.Infrastructure.Services
 
         private readonly string _connectionString;
 
-        public SignalService(EmailService emailService, ICryptoCompareGateway cryptoCompareGateway, Microsoft.Extensions.Configuration.IConfiguration configuration)
+        private readonly SignalConfiguration _signalConfiguartion;
+
+        public SignalService(EmailService emailService,
+            ICryptoCompareGateway cryptoCompareGateway,
+            IConfiguration configuration,
+            IOptions<SignalConfiguration> signalConfiguration)
         {
             _connectionString = configuration.GetConnectionString(ContextContstants.ConnectionStringCoreDB);
             _emailService = emailService;
             _cryptoCompareGateway = cryptoCompareGateway;
+            _signalConfiguartion = signalConfiguration?.Value;
 
             _timer = new Timer();
             _timer.Elapsed += OnTimerElapsed;
-            _timer.Interval = 1000 * 60 * 5;
+            _timer.Interval = 1000 * _signalConfiguartion.Period;
             //_timer.AutoReset = true;
 
             _timer.Start();
@@ -41,7 +49,7 @@ namespace ES.Infrastructure.Services
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            _timer.Stop();
+            //_timer.Stop();
             using (var context = new CoreDBContext(new DbContextOptionsBuilder<CoreDBContext>().UseNpgsql(_connectionString).Options))
             {
                 List<Account> accounts = context?.Accounts?

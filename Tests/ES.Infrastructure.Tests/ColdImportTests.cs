@@ -205,10 +205,10 @@ namespace ES.Infrastructure.Tests
             var context = Context();
             bool isAll60 = await context.Candles.AllAsync(x => x.Interval == 60);
             bool isAllMatch = await context.Candles
-                .Include(x => x.Pair)
-                .AllAsync(x => x.Pair.CurrencyFrom.Symbol == from
-                && x.Pair.CurrencyFrom.Symbol == to
-                && x.Pair.Exchange.Name == exchange);
+                .Include(x => x.ExchangePair)
+                .AllAsync(x => x.ExchangePair.CurrencyFrom.Symbol == from
+                && x.ExchangePair.CurrencyFrom.Symbol == to
+                && x.ExchangePair.Exchange.Name == exchange);
 
             Assert.True(isAll60);
             Assert.True(isAllMatch);

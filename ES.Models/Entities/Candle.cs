@@ -23,8 +23,8 @@ namespace ES.Domain.Entities
 
         public decimal VolumeTo { get; set; }
 
-        public virtual ExchangePair Pair { get; set; }
+        public virtual ExchangePair ExchangePair { get; set; }
 
-        public Guid PairId { get; set; }
+        public Guid ExchangePairId { get; set; }
     }
 }

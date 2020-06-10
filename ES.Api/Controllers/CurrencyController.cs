@@ -52,7 +52,7 @@ namespace ES.API.Controllers
         }
 
         /// <summary>
-        /// Испорт исторических данных
+        /// Импорт исторических данных
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>

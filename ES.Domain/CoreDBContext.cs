@@ -42,7 +42,8 @@ namespace ES.Domain
 
             modelBuilder.Entity<Candle>(e =>
             {
-                e.HasAlternateKey(e => new { e.TimeOpen, e.TimeClose, e.PairId });
+                e.HasAlternateKey(e => new { e.TimeOpen, e.TimeClose, e.ExchangePairId });
+                e.HasOne(x => x.ExchangePair).WithMany().HasForeignKey(x => x.ExchangePairId);
             });
 
             modelBuilder.Entity<Subscription>(e =>

@@ -106,7 +106,7 @@ namespace ES.Infrastructure.Services
             }
         }
 
-        public async Task ImportAllMinutePairCandles(string fromSymbol, string toSymbol, string exchange)
+        public async Task ImportAllMinutePairCandles_Old(string fromSymbol, string toSymbol, string exchange)
         {
             if (string.IsNullOrEmpty(fromSymbol) == false && string.IsNullOrEmpty(toSymbol) == false && string.IsNullOrEmpty(exchange) == false)
             {
@@ -158,7 +158,7 @@ namespace ES.Infrastructure.Services
                                 foreach (var candleDTO in candleDTOs)
                                 {
                                     Candle candle = _mapper.Map<Candle>(candleDTO);
-                                    candle.PairId = pair.Id;
+                                    candle.ExchangePairId = pair.Id;
                                     candle.TimeClose = candle.TimeOpen + interval;
                                     candle.Interval = interval;
 
@@ -170,9 +170,9 @@ namespace ES.Infrastructure.Services
                                 try
                                 {
                                     var dif = _coreDBContext.Candles
-                                        .Include(x => x.Pair)
+                                        .Include(x => x.ExchangePair)
                                         .AsEnumerable()
-                                        .Where(c => c.PairId == pair.Id && candles.Any(x => x.TimeOpen == c.TimeOpen && x.TimeClose == c.TimeClose))
+                                        .Where(c => c.ExchangePairId == pair.Id && candles.Any(x => x.TimeOpen == c.TimeOpen && x.TimeClose == c.TimeClose))
                                         .ToList();
 
                                     await _coreDBContext.AddRangeAsync(candles);
@@ -187,9 +187,9 @@ namespace ES.Infrastructure.Services
                                 catch (InvalidOperationException ex)
                                 {
                                     var dif = _coreDBContext.Candles
-                                        .Include(x => x.Pair)
+                                        .Include(x => x.ExchangePair)
                                         .AsEnumerable()
-                                        .Where(c => c.PairId == pair.Id && candles.Any(x => x.TimeOpen == c.TimeOpen && x.TimeClose == c.TimeClose))
+                                        .Where(c => c.ExchangePairId == pair.Id && candles.Any(x => x.TimeOpen == c.TimeOpen && x.TimeClose == c.TimeClose))
                                         .ToList();
                                     //var c = candles.GroupBy(x => new { x.TimeOpen, x.TimeClose, x.PairId }).ToArray().Count();
                                     _logger.Error(ex, "");
@@ -210,6 +210,39 @@ namespace ES.Infrastructure.Services
                 else
                 {
                     //пара отсутствует на бирже
+                }
+            }
+        }
+
+        public async Task ImportAllMinutePairCandles(string fromSymbol, string toSymbol, string exchange)
+        {
+            ExchangePair pair = await _coreDBContext.Pairs
+                   .FirstOrDefaultAsync(x =>
+                   x.CurrencyTo.Symbol == toSymbol
+                   && x.CurrencyFrom.Symbol == fromSymbol
+                   && x.Exchange.Name == exchange);
+
+            if (pair != null)
+            {
+
+                var command = new HistoricalCandleCommand
+                {
+                    Exchange = exchange,
+                    FromSymbol = fromSymbol,
+                    ToSymbol = toSymbol,
+                    Period = AlphaVantageHistoricalPeriod.OneMinute
+                };
+                var commandResult = await _cryptoCompareGateway.HistoricalCandle(command);
+
+                if (commandResult?.IsSuccess == true && commandResult.Content.Count > 0)
+                {
+                    List<Candle> candles = _mapper.Map<List<Candle>>(commandResult.Content);
+                    candles.ForEach(c => c.ExchangePairId = pair.Id);
+                    if (candles?.Count > 0)
+                    {
+                        await _coreDBContext.AddRangeAsync(candles);
+                        await _coreDBContext.SaveChangesAsync();
+                    }
                 }
             }
         }

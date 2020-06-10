@@ -18,5 +18,11 @@ namespace ES.Domain.Interfaces.Gateways
 
         public Task<CommandResult<AnalysisDTO>> SMA(BaseAnalysisCommand command);
 
+        public Task<CommandResult<AnalysisDTO>> VWAP(BaseAnalysisCommand command);
+
+        public Task<CommandResult<AnalysisDTO>> MACD(BaseAnalysisCommand command);
+
+        public Task<CommandResult<AnalysisDTO>> STOCH(BaseAnalysisCommand command);
+
     }
 }
